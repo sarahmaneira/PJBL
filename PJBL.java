@@ -13,7 +13,9 @@ class Restaurante{
         this.endereco = endereco;
     }
 
-
+    public void abrirRestaurante(){
+        System.out.println("Restaurante aberto");
+    }
 }
 
 abstract class Funcionario {
