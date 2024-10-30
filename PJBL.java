@@ -16,6 +16,18 @@ class Restaurante{
     public void abrirRestaurante(){
         System.out.println("Restaurante aberto");
     }
+
+    public void fecharRestaurante(){
+        System.out.println("Restaurante fechado");
+    }
+
+    // adicionar pedido
+    public void adicionarPedido(){
+
+    }
+    // remover pedido
+    // mostrar cardapio
+
 }
 
 abstract class Funcionario {
