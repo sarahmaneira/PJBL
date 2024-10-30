@@ -101,6 +101,22 @@ class Pedido{
     }
 }
 
+class Cardapio{
+    private ArrayList<Prato> Prato = new ArrayList<>();
+
+    public void adicionarPrato(){
+
+    }
+
+    public void removerPrato(){
+
+    }
+
+    public void mostrarPratos(){
+
+    }
+}
+
 
 
 
