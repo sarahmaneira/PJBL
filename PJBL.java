@@ -3,7 +3,7 @@ import java.io.*;
 
 class PJBL {
     public static void main(String[] args) throws IOException {
-        FileInputStream fileIn = new FileInputStream(pratos.ser);
+        FileInputStream fileIn = new FileInputStream("pratos.ser");
         ObjectInputStream objIn = new ObjectInputStream(fileIn);
         Prato p = (Prato) objIn.readObject();
 
@@ -12,35 +12,8 @@ class PJBL {
     }
 }
 
-class Restaurante{
-    private String nome;
-    private String endereco;
-    private ArrayList<Cliente> clientes = new ArrayList<>();
-    private ArrayList<Pedido> pedidos = new ArrayList<>();
-    private ArrayList<Funcionario> funcionarios = new ArrayList<>();
-    private Cardapio cardapio = new (Cardapio);
 
-    public Restaurante (String nome, String endereco){
-        this.nome = nome;
-        this.endereco = endereco;
-    }
 
-    public void abrirRestaurante(){
-        System.out.println("Restaurante aberto");
-    }
-
-    public void fecharRestaurante(){
-        System.out.println("Restaurante fechado");
-    }
-
-    // adicionar pedido
-    public void adicionarPedido(){
-
-    }
-    // remover pedido
-    // mostrar cardapio
-
-}
 
 abstract class Funcionario {
     private String nome;
@@ -85,14 +58,26 @@ abstract class Garcom extends Funcionario {
 }
 
 class Prato{
-    String nome;
-    double valor;
-    String descricao;
+    private String nome;
+    private double valor;
+    private String descricao;
 
     public Prato(String nome, double valor, String descricao){
         this.nome = nome;
         this.valor = valor;
         this.descricao = descricao;
+    }
+
+    public String getNome(){
+        return nome;
+    }
+
+    public String getDescricao(){
+        return descricao;
+    }
+
+    public double getValor(){
+        return valor;
     }
 }
 
@@ -123,23 +108,49 @@ class Pedido{
 
     public void calcularTotal(){
     }
+
+    public void mostrarPedido(){
+
+    }
+
 }
 
 class Cardapio{
-    private ArrayList<Prato> Prato = new ArrayList<>();
+    private ArrayList<Prato> pratos = new ArrayList<>();
 
-    public void adicionarPrato(){
-
+    public void adicionarPrato(Prato prato){
+        pratos.add(prato);
+        System.out.println("Prato adicionado:" + prato.getNome() + "- Valor R$:" + prato.getValor() + "- Descrição: " + prato.getDescricao());
     }
 
-    public void removerPrato(){
-
+    public void removerPrato(Prato prato){
+        if (pratos.remove(prato)){
+            System.out.println("Prato removido:" + prato.getNome() + "- Valor R$:" + prato.getValor() + "- Descrição" + prato.getDescricao());
+        } else {
+            System.out.println("Prato não encontrado no cardápio.");
+        }
     }
 
-    public void mostrarPratos(){
-
+    public void mostrarPratos(Prato prato){
+        System.out.println("Pratos no cardápio:");
+        for (Prato pratos : pratos){
+            System.out.println("Prato:" + prato.getNome() + "- Valor R$:" + prato.getValor() + "- Descrição: " + prato.getDescricao());
+        }
     }
 }
+
+class pedidoInvalidoException extends Exception{
+    public pedidoInvalidoException(){
+        super();
+    }
+
+    @Override
+    public String toString() {
+        return "Nenhum prato selecionado";
+    }
+}
+
+
 
 
 
