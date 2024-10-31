@@ -9,6 +9,11 @@ class PJBL {
 
         objIn.close();
         fileIn.close();
+
+        String pratosArquivo = "pratos.csv";
+        String separador = ";";
+
+        List<List<String>> 
     }
 }
 
