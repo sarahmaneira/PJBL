@@ -2,6 +2,7 @@ class Prato{
     private String nome;
     private double valor;
     private String descricao;
+    private Chefe chefeResponsavel;
 
     public Prato(String nome, double valor, String descricao){
         this.nome = nome;
@@ -20,4 +21,11 @@ class Prato{
     public double getValor(){
         return valor;
     }
+
+    public Chefe getChefeResponsavel(){ return chefeResponsavel; }
+
+    public void setChefResponsavel(Chefe chefe) {
+        this.chefeResponsavel = chefe;
+    }
 }
+
