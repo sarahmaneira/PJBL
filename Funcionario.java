@@ -16,4 +16,24 @@ abstract class Funcionario {
     public void calcularSalario(double valorFixo, int horasTrabalhadas){
         salario = valorFixo * horasTrabalhadas;
     }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public double getSalario(){
+        return salario;
+    }
+
+    public String getCargo(){
+        return cargo;
+    }
+
+    public int getIdade(){
+        return idade;
+    }
+
+    public String getGenero(){
+        return genero;
+    }
 }

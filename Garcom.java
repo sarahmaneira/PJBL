@@ -1,4 +1,4 @@
-abstract class Garcom extends Funcionario {
+class Garcom extends Funcionario {
     private double valorFixo;
     private int horasTrabalhadas;
 
@@ -6,5 +6,13 @@ abstract class Garcom extends Funcionario {
         super(nome, cargo, idade, salario, genero);
         this.valorFixo = valorFixo;
         this.horasTrabalhadas = horasTrabalhadas;
+    }
+
+    public double getValorFixo() {
+        return valorFixo;
+    }
+
+    public int getHorasTrabalhadas() {
+        return horasTrabalhadas;
     }
 }
