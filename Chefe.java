@@ -17,11 +17,11 @@ class Chefe extends Funcionario {
         prato.add(p);
     }
 
-    public double getValorFixo(){
+   public double getValorFixo(){
         return valorFixo;
-    }
+   }
 
-    public int getHorasTrabalhadas(){
+   public int getHorasTrabalhadas(){
         return horasTrabalhadas;
-    }
+   }
 }
