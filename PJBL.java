@@ -26,9 +26,17 @@ class PJBL {
 
                             Prato prato = new Prato(nomePrato, valorPrato, descricaoPrato, chefeResponsavel);
 
-                            if (prato.getChefeResponsavel().equals("c1"){
+                            Chefe chefe1 = new Chefe("Cristiano", "Chefe", 28, 4500.0,"Masculino",204.55, 8, "c1");
+                            Chefe chefe2 = new Chefe("Gustavo", "Chefe", 36, 4500.0,"Masculino",204.55, 8, "c2");
+
+
+                            if (prato.getChefeResponsavel().equals("c1")){
                                 chefe1.adicionarPrato(prato);
+                            } else{
+                                chefe2.adicionarPrato(prato);
                             }
+
+
                         }
                     }
 

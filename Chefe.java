@@ -13,6 +13,8 @@ class Chefe extends Funcionario {
         this.identificador = identificador;
     }
 
+
+
     public void adicionarPrato(Prato p){
         prato.add(p);
     }

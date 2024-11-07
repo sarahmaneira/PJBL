@@ -1,4 +1,4 @@
-public abstract class Funcionario {
+public class Funcionario {
     private String nome;
     private String cargo;
     private int idade;
@@ -33,5 +33,5 @@ public abstract class Funcionario {
         return genero;
     }
 
-    public abstract void calcularSalario();
+
 }

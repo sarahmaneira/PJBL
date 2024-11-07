@@ -6,7 +6,7 @@ public class Restaurante {
     private ArrayList<Cliente> clientes = new ArrayList<>();
     private ArrayList<Pedido> pedidos = new ArrayList<>();
     private ArrayList<Funcionario> funcionarios = new ArrayList<>();
-    private Cardapio cardapio = new (Cardapio);
+    private Cardapio cardapio = new Cardapio();
 
     public Restaurante (String nome, String endereco){
         this.nome = nome;
