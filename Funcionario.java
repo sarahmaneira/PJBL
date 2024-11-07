@@ -1,11 +1,11 @@
-abstract class Funcionario {
+public abstract class Funcionario {
     private String nome;
     private String cargo;
     private int idade;
     private double salario;
     private String genero;
 
-    public Funcionario(String nome, String cargo, int idade, double salario, String genero){
+    public Funcionario(String nome, String cargo, int idade, double salario, String genero) {
         this.nome = nome;
         this.cargo = cargo;
         this.idade = idade;
@@ -13,27 +13,25 @@ abstract class Funcionario {
         this.genero = genero;
     }
 
-    public void calcularSalario(double valorFixo, int horasTrabalhadas){
-        salario = valorFixo * horasTrabalhadas;
-    }
-
     public String getNome() {
         return nome;
     }
 
-    public double getSalario(){
+    public double getSalario() {
         return salario;
     }
 
-    public String getCargo(){
+    public String getCargo() {
         return cargo;
     }
 
-    public int getIdade(){
+    public int getIdade() {
         return idade;
     }
 
-    public String getGenero(){
+    public String getGenero() {
         return genero;
     }
+
+    public abstract void calcularSalario();
 }
