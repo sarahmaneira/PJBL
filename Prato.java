@@ -1,4 +1,4 @@
-class Prato{
+public class Prato{
     private String nome;
     private double valor;
     private String descricao;

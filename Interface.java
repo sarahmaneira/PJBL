@@ -25,20 +25,36 @@ public class Interface extends JFrame {
             }
         });
 
+        JButton btnFecharRestaurante = new JButton("Fechar Restaurante");
+        btnFecharRestaurante.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fecharRestaurante();
+            }
+        });
+
         // Adiciona o botão à janela
         add(btnAbrirRestaurante);
+        add(btnFecharRestaurante);
 
         // Tornar a janela visível
         setVisible(true);
     }
 
-    // Método que é chamado quando o botão é clicado
+
     public void abrirRestaurante() {
         // Aqui você pode colocar qualquer lógica que deseja executar
         JOptionPane.showMessageDialog(this, "Restaurante Aberto!", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    // Método main para iniciar a aplicação
+    public void fecharRestaurante(){
+        JOptionPane.showMessageDialog(this, "Restaurante Fechado!", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+
+
+
+
     public static void main(String[] args) {
         new Interface(); // Cria a janela
     }
