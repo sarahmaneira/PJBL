@@ -5,47 +5,53 @@ import java.awt.event.ActionListener;
 
 public class Interface extends JFrame {
 
-    // Construtor da janela principal
+
     public Interface() {
-        // Configurações da janela principal
-        setTitle("Restaurante");
+
+        setTitle("Taisho");
         setSize(300, 200); // Tamanho da janela
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Fecha a janela ao clicar no X
         setLocationRelativeTo(null); // Centraliza a janela na tela
 
-        // Layout da janela
-        setLayout(new FlowLayout());
 
-        // Botão que vai chamar o metodo abrir restaur
-        JButton btnAbrirRestaurante = new JButton("Abrir Restaurante");
-        btnAbrirRestaurante.addActionListener(new ActionListener() {
+        setLayout(new FlowLayout(FlowLayout.CENTER, 20, 30));
+
+
+
+        JButton btnGerenciarRestaurante = new JButton("Gerenciar Restaurante");
+        btnGerenciarRestaurante.setFocusPainted(false);
+        btnGerenciarRestaurante.setBackground(new Color(0,0,0));
+        btnGerenciarRestaurante.setForeground(Color.WHITE);
+        btnGerenciarRestaurante.setFont(new Font("Calibri",Font.BOLD,14));
+        btnGerenciarRestaurante.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                abrirRestaurante();
+                new InterfaceAberto();
+                dispose();
             }
         });
 
-        JButton btnFecharRestaurante = new JButton("Fechar Restaurante");
-        btnFecharRestaurante.addActionListener(new ActionListener() {
+        JButton btnModoCliente = new JButton("Modo Cliente");
+        btnModoCliente.setFocusPainted(false);
+        btnModoCliente.setBackground(new Color(0,0,0));
+        btnModoCliente.setForeground(Color.WHITE);
+        btnModoCliente.setFont(new Font("Calibri",Font.BOLD,14));
+        btnModoCliente.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                fecharRestaurante();
+                new InterfaceCliente();
+                dispose();
             }
         });
 
-        // Adiciona o botão à janela
-        add(btnAbrirRestaurante);
-        add(btnFecharRestaurante);
 
-        // Tornar a janela visível
+        add(btnGerenciarRestaurante);
+        add(btnModoCliente);
+
+
         setVisible(true);
     }
 
-
-    public void abrirRestaurante() {
-        // Aqui você pode colocar qualquer lógica que deseja executar
-        JOptionPane.showMessageDialog(this, "Restaurante Aberto!", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
-    }
 
     public void fecharRestaurante(){
         JOptionPane.showMessageDialog(this, "Restaurante Fechado!", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
