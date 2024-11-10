@@ -46,8 +46,6 @@ public class InterfaceAberto extends JFrame{
         desktopPane = new JDesktopPane();
         add(desktopPane, BorderLayout.CENTER);
 
-        mostrarChefes();
-        criarFormularioChefe();
 
         JanelaGarcom();
         JanelaChefes();
@@ -90,6 +88,10 @@ public class InterfaceAberto extends JFrame{
         JInternalFrame janelaPratos = new JInternalFrame("Pratos", false,false,false,false);
         janelaPratos.setSize(300,200);
         janelaPratos.setLayout(new FlowLayout());
+
+        JTextArea textAreaPratos = new JTextArea(10, 25);
+        textAreaPratos.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(textAreaPratos);
 
         janelaPratos.setLocation(10,250);
 
@@ -141,7 +143,7 @@ public class InterfaceAberto extends JFrame{
         btnAdicionarChefe.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(InterfaceAberto.this, "Chefe Adicionado!");
+                criarFormularioChefe();
             }
         });
 
@@ -208,6 +210,11 @@ public class InterfaceAberto extends JFrame{
     }
 
     private void criarFormularioChefe(){
+        JFrame formFrame = new JFrame("Adicionar Chefe");
+        formFrame.setSize(300,300);
+        formFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        formFrame.setLocationRelativeTo(this);
+
         JPanel formPanel = new JPanel(new GridLayout(9,2,5,5));
         formPanel.setBorder(BorderFactory.createTitledBorder("Adicionar Chefe"));
 
@@ -256,6 +263,8 @@ public class InterfaceAberto extends JFrame{
 
                     // Atualizar a lista de chefes na interface
                     mostrarChefes();
+
+                    formFrame.dispose();
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Preencha todos os campos corretamente!", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
@@ -264,8 +273,8 @@ public class InterfaceAberto extends JFrame{
 
         formPanel.add(adicionarChefeBtn);
 
-        formPanel.setBounds(10, 200, 300, 300);
-        desktopPane.add(formPanel);
+        formFrame.add(formPanel);
+        formFrame.setVisible(true);
 
     }
 }
