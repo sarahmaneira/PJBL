@@ -18,6 +18,7 @@ public class InterfaceCliente extends JFrame{
 
    private JDesktopPane desktopPane;
    private Map<String, Integer> pratosAdicionados;
+   private Map<String, Double> precosPratos;
 
    public InterfaceCliente(){
        setTitle("Taisho Restaurante");
@@ -107,12 +108,23 @@ public class InterfaceCliente extends JFrame{
     }
 
     private void CarregarDados(DefaultTableModel modeloTabela){
+        precosPratos = new HashMap<>();
+
         try (BufferedReader br = new BufferedReader(new FileReader("pratos.csv"))) {
             String linha;
             while ((linha = br.readLine()) != null) {
                 String[] dados = linha.split(";");
                 if (dados.length == 4) {
-                    modeloTabela.addRow(new Object[]{dados[0], dados[1], dados[2], dados[3],"Add"});
+                    String nome = dados[0];
+                    double preco = Double.parseDouble(dados[1]);
+                    String descricao = dados[2];
+                    String chefe = dados[3];
+
+
+                    precosPratos.put(nome, preco);
+
+
+                    modeloTabela.addRow(new Object[]{nome, preco, descricao, chefe, "Add"});
                 }
             }
         } catch (IOException e) {
@@ -153,7 +165,7 @@ public class InterfaceCliente extends JFrame{
                 double precoUnitario = obterPreco(prato);
                 double total = precoUnitario * quantidade;
 
-                writer.write("Prato: " + prato + ", Quantidade: " + quantidade + ", Preço Unitário: R$ " + precoUnitario + ", Total: R$ " + total);
+                writer.write("Prato: " + prato + "- Quantidade: " + quantidade + "- Preço Unitário: R$ " + precoUnitario + "- Total: R$ " + total);
                 writer.newLine();
             }
         } catch (IOException e) {
@@ -163,7 +175,7 @@ public class InterfaceCliente extends JFrame{
     }
 
     private double obterPreco(String nomePrato){
-       return 25.0;
+       return precosPratos.getOrDefault(nomePrato, 0.0);
     }
 
 
