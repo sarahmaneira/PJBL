@@ -2,10 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+// modo gerente
 public class InterfaceAberto extends JFrame{
-
     private JDesktopPane desktopPane;
+    private ArrayList<Chefe> chefes = new ArrayList<>();
 
     public InterfaceAberto(){
         setTitle("Gerenciamento Restaurante");
@@ -44,6 +46,9 @@ public class InterfaceAberto extends JFrame{
         desktopPane = new JDesktopPane();
         add(desktopPane, BorderLayout.CENTER);
 
+        mostrarChefes();
+        criarFormularioChefe();
+
         JanelaGarcom();
         JanelaChefes();
         JanelaPratos();
@@ -65,9 +70,6 @@ public class InterfaceAberto extends JFrame{
         janelaGarcons.setLayout(new FlowLayout());
 
         janelaGarcons.setLocation(10, 10);
-
-
-
 
         janelaGarcons.setVisible(true);
         desktopPane.add(janelaGarcons);
@@ -191,4 +193,80 @@ public class InterfaceAberto extends JFrame{
 
         desktopPane.add(painelBotoes);
     }
+
+    private void mostrarChefes(){
+        JPanel painelChefes = new JPanel(new GridLayout(0, 1));
+        painelChefes.setBorder(BorderFactory.createTitledBorder("Chefes"));
+
+        for (Chefe chefe : chefes){
+            JLabel labelChefe = new JLabel("Nome: " + chefe.getNome() + ", ID: " + chefe.getIdentificador() + ", Salário: " + chefe.getSalario());
+            painelChefes.add(labelChefe);
+        }
+
+        painelChefes.setBounds(10, 10, 300, 150);
+        desktopPane.add(painelChefes);
+    }
+
+    private void criarFormularioChefe(){
+        JPanel formPanel = new JPanel(new GridLayout(9,2,5,5));
+        formPanel.setBorder(BorderFactory.createTitledBorder("Adicionar Chefe"));
+
+        JTextField nomeField = new JTextField();
+        JTextField cargoField = new JTextField();
+        JTextField idadeField = new JTextField();
+        JTextField salarioField = new JTextField();
+        JTextField generoField = new JTextField();
+        JTextField valorFixoField = new JTextField();
+        JTextField horasTrabalhadasField = new JTextField();
+        JTextField identificadorField = new JTextField();
+
+        formPanel.add(new JLabel("Nome:"));
+        formPanel.add(nomeField);
+        formPanel.add(new JLabel("Cargo:"));
+        formPanel.add(cargoField);
+        formPanel.add(new JLabel("Idade:"));
+        formPanel.add(idadeField);
+        formPanel.add(new JLabel("Salário:"));
+        formPanel.add(salarioField);
+        formPanel.add(new JLabel("Gênero:"));
+        formPanel.add(generoField);
+        formPanel.add(new JLabel("Valor Fixo:"));
+        formPanel.add(valorFixoField);
+        formPanel.add(new JLabel("Horas Trabalhadas:"));
+        formPanel.add(horasTrabalhadasField);
+        formPanel.add(new JLabel("Identificador:"));
+        formPanel.add(identificadorField);
+
+        JButton adicionarChefeBtn = new JButton("Adicionar Chefe");
+        adicionarChefeBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    String nome = nomeField.getText();
+                    String cargo = cargoField.getText();
+                    int idade = Integer.parseInt(idadeField.getText());
+                    double salario = Double.parseDouble(salarioField.getText());
+                    String genero = generoField.getText();
+                    double valorFixo = Double.parseDouble(valorFixoField.getText());
+                    int horasTrabalhadas = Integer.parseInt(horasTrabalhadasField.getText());
+                    String identificador = identificadorField.getText();
+
+                    Chefe novoChefe = new Chefe(nome, cargo, idade, salario, genero, valorFixo, horasTrabalhadas, identificador);
+                    chefes.add(novoChefe);
+
+                    // Atualizar a lista de chefes na interface
+                    mostrarChefes();
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Preencha todos os campos corretamente!", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        formPanel.add(adicionarChefeBtn);
+
+        formPanel.setBounds(10, 200, 300, 300);
+        desktopPane.add(formPanel);
+
+    }
 }
+
