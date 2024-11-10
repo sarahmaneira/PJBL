@@ -60,6 +60,7 @@ public class InterfaceCliente extends JFrame{
 
        JanelaInfo();
        BotaoCompra();
+       pratosAdicionados = new HashMap<>();
 
        setVisible(true);
    }
@@ -91,7 +92,7 @@ public class InterfaceCliente extends JFrame{
        tabelaPratos.getColumnModel().getColumn(3).setPreferredWidth(50);
 
        tabelaPratos.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer());
-       tabelaPratos.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(new JCheckBox()));
+       tabelaPratos.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(new JCheckBox(), tabelaPratos));
        tabelaPratos.getColumnModel().getColumn(4).setPreferredWidth(80);
 
 
@@ -132,6 +133,7 @@ public class InterfaceCliente extends JFrame{
         btnCompra.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                SalvarItens();
                 JOptionPane.showMessageDialog(InterfaceCliente.this,"Pedido registrado.");
             }
         });
@@ -140,10 +142,36 @@ public class InterfaceCliente extends JFrame{
         add(botaoComprar, BorderLayout.SOUTH);
     }
 
+    private void SalvarItens() {
+
+        System.out.println("Caminho do diretório atual: " + System.getProperty("user.dir"));
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("itens_adicionados.txt", true))) {
+            for (Map.Entry<String, Integer> entry : pratosAdicionados.entrySet()) {
+                String prato = entry.getKey();
+                int quantidade = entry.getValue();
+                double precoUnitario = obterPreco(prato);
+                double total = precoUnitario * quantidade;
+
+                writer.write("Prato: " + prato + ", Quantidade: " + quantidade + ", Preço Unitário: R$ " + precoUnitario + ", Total: R$ " + total);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao salvar os itens.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    private double obterPreco(String nomePrato){
+       return 25.0;
+    }
+
+
+
     class ButtonRenderer extends JButton implements TableCellRenderer {
-       public ButtonRenderer(){
-           setOpaque(true);
-       }
+        public ButtonRenderer(){
+            setOpaque(true);
+        }
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -156,25 +184,30 @@ public class InterfaceCliente extends JFrame{
        private JButton button;
        private String label;
        private boolean isPushed;
+       private JTable table;
 
-       public ButtonEditor(JCheckBox checkBox){
+       public ButtonEditor(JCheckBox checkBox, JTable table){
            super(checkBox);
+           this.table = table;
            button = new JButton();
            button.setOpaque(true);
            button.addActionListener(new ActionListener() {
                public void actionPerformed(ActionEvent e) {
+                   int row = table.getSelectedRow();
+                   String nome = table.getValueAt(row, 0).toString();
+                   pratosAdicionados.put(nome, pratosAdicionados.getOrDefault(nome, 0) + 1);
                    fireEditingStopped();
                }
            });
        }
 
-       @Override
-       public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-            label = (value == null) ? "Add" : value.toString();
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            label = (value == null) ? "Adicionar" : value.toString();
             button.setText(label);
             isPushed = true;
             return button;
-       }
+        }
 
         @Override
         public Object getCellEditorValue() {
