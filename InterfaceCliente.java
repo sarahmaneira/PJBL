@@ -165,7 +165,7 @@ public class InterfaceCliente extends JFrame{
                 double precoUnitario = obterPreco(prato);
                 double total = precoUnitario * quantidade;
 
-                writer.write("Prato: " + prato + "- Quantidade: " + quantidade + "- Preço Unitário: R$ " + precoUnitario + "- Total: R$ " + total);
+                writer.write("Prato: " + prato + " - Quantidade: " + quantidade + " - Preço Unitário: R$ " + precoUnitario + " - Total: R$ " + total);
                 writer.newLine();
             }
         } catch (IOException e) {
