@@ -7,10 +7,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+
 public class InterfaceCliente extends JFrame{
 
    private JDesktopPane desktopPane;
+   private Map<String, Integer> pratosAdicionados;
 
    public InterfaceCliente(){
        setTitle("Taisho Restaurante");
@@ -85,6 +92,7 @@ public class InterfaceCliente extends JFrame{
 
        tabelaPratos.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer());
        tabelaPratos.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(new JCheckBox()));
+       tabelaPratos.getColumnModel().getColumn(4).setPreferredWidth(80);
 
 
        JScrollPane scrollPane = new JScrollPane(tabelaPratos);
@@ -103,7 +111,7 @@ public class InterfaceCliente extends JFrame{
             while ((linha = br.readLine()) != null) {
                 String[] dados = linha.split(";");
                 if (dados.length == 4) {
-                    modeloTabela.addRow(new Object[]{dados[0], dados[1], dados[2], dados[3],"Adicionar"});
+                    modeloTabela.addRow(new Object[]{dados[0], dados[1], dados[2], dados[3],"Add"});
                 }
             }
         } catch (IOException e) {
@@ -139,7 +147,7 @@ public class InterfaceCliente extends JFrame{
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            setText((value == null) ? "Adicionar" : value.toString());
+            setText((value == null) ? "Add" : value.toString());
             return this;
         }
     }
@@ -153,9 +161,44 @@ public class InterfaceCliente extends JFrame{
            super(checkBox);
            button = new JButton();
            button.setOpaque(true);
-
+           button.addActionListener(new ActionListener() {
+               public void actionPerformed(ActionEvent e) {
+                   fireEditingStopped();
+               }
+           });
        }
+
+       @Override
+       public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            label = (value == null) ? "Add" : value.toString();
+            button.setText(label);
+            isPushed = true;
+            return button;
+       }
+
+        @Override
+        public Object getCellEditorValue() {
+            if (isPushed) {
+                JOptionPane.showMessageDialog(button, "Item adicionado!");
+            }
+            isPushed = false;
+            return label;
+        }
+
+        @Override
+        public boolean stopCellEditing() {
+            isPushed = false;
+            return super.stopCellEditing();
+        }
+
+        @Override
+        protected void fireEditingStopped() {
+            super.fireEditingStopped();
+        }
+
     }
+
+
 
 
 }
