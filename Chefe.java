@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-class Chefe extends Funcionario {
+public class Chefe extends Funcionario {
     private String identificador;
     private double valorFixo;
     private int horasTrabalhadas;
@@ -13,10 +13,12 @@ class Chefe extends Funcionario {
         this.identificador = identificador;
     }
 
-
-
     public void adicionarPrato(Prato p){
         prato.add(p);
+    }
+
+    public String getIdentificador(){
+        return identificador;
     }
 
    public double getValorFixo(){
