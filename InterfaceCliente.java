@@ -1,12 +1,13 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableCellEditor;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
 public class InterfaceCliente extends JFrame{
 
    private JDesktopPane desktopPane;
@@ -65,22 +66,26 @@ public class InterfaceCliente extends JFrame{
        janelaInf.setSize(687,445);
        janelaInf.setLayout(new FlowLayout());
 
-       String[] colunas = {"Nome", "Preço", "Descrição", "Chefe"};
+       String[] colunas = {"Nome", "Preço", "Descrição", "Chefe", "Adicionar"};
+
        DefaultTableModel modeloTabela = new DefaultTableModel(colunas, 0){
            public boolean isCellEditable(int row, int column){
-               return false;
+               return column == 4;
            }
 
        };
        JTable tabelaPratos = new JTable(modeloTabela);
 
-       tabelaPratos.setRowHeight(35);
+       tabelaPratos.setRowHeight(36);
        tabelaPratos.setFont(new Font("Calibri", Font.PLAIN, 14));
+       tabelaPratos.getColumnModel().getColumn(0).setPreferredWidth(90);
+       tabelaPratos.getColumnModel().getColumn(1).setPreferredWidth(50);
+       tabelaPratos.getColumnModel().getColumn(2).setPreferredWidth(300);
+       tabelaPratos.getColumnModel().getColumn(3).setPreferredWidth(50);
 
-        tabelaPratos.getColumnModel().getColumn(0).setPreferredWidth(200);
-        tabelaPratos.getColumnModel().getColumn(1).setPreferredWidth(100);
-        tabelaPratos.getColumnModel().getColumn(2).setPreferredWidth(300);
-        tabelaPratos.getColumnModel().getColumn(3).setPreferredWidth(150);
+       tabelaPratos.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer());
+       tabelaPratos.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(new JCheckBox()));
+
 
        JScrollPane scrollPane = new JScrollPane(tabelaPratos);
        janelaInf.add(scrollPane, BorderLayout.CENTER);
@@ -98,7 +103,7 @@ public class InterfaceCliente extends JFrame{
             while ((linha = br.readLine()) != null) {
                 String[] dados = linha.split(";");
                 if (dados.length == 4) {
-                    modeloTabela.addRow(dados);
+                    modeloTabela.addRow(new Object[]{dados[0], dados[1], dados[2], dados[3],"Adicionar"});
                 }
             }
         } catch (IOException e) {
@@ -110,7 +115,7 @@ public class InterfaceCliente extends JFrame{
        JPanel botaoComprar = new JPanel();
         botaoComprar.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 10));
 
-       JButton btnCompra = new JButton("Finalizar Compra");
+       JButton btnCompra = new JButton("Finalizar Pedido");
         btnCompra.setFocusPainted(false);
         btnCompra.setBackground(new Color(0,0,0));
         btnCompra.setForeground(Color.WHITE);
@@ -125,6 +130,31 @@ public class InterfaceCliente extends JFrame{
 
         botaoComprar.add(btnCompra);
         add(botaoComprar, BorderLayout.SOUTH);
+    }
+
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+       public ButtonRenderer(){
+           setOpaque(true);
+       }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            setText((value == null) ? "Adicionar" : value.toString());
+            return this;
+        }
+    }
+
+    class ButtonEditor extends DefaultCellEditor {
+       private JButton button;
+       private String label;
+       private boolean isPushed;
+
+       public ButtonEditor(JCheckBox checkBox){
+           super(checkBox);
+           button = new JButton();
+           button.setOpaque(true);
+
+       }
     }
 
 
