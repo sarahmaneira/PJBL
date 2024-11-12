@@ -1,3 +1,5 @@
+
+
 public class Garcom extends Funcionario {
     private double valorFixo;
     private int horasTrabalhadasPorDia;

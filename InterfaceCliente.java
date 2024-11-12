@@ -16,94 +16,94 @@ import java.util.Map;
 
 public class InterfaceCliente extends JFrame{
 
-   private JDesktopPane desktopPane;
-   private Map<String, Integer> pratosAdicionados;
-   private Map<String, Double> precosPratos;
+    private JDesktopPane desktopPane;
+    private Map<String, Integer> pratosAdicionados;
+    private Map<String, Double> precosPratos;
 
-   public InterfaceCliente(){
-       setTitle("Taisho Restaurante");
-       setSize(700,580);
-       setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-       setLocationRelativeTo(null);
+    public InterfaceCliente(){
+        setTitle("Taisho Restaurante");
+        setSize(700,580);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
 
-       setLayout(new BorderLayout());
+        setLayout(new BorderLayout());
 
-       JPanel topPanel = new JPanel(new BorderLayout());
-       topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-       JLabel label = new JLabel("Taisho",SwingConstants.LEFT);
-       label.setFont(new Font("Ink Free",Font.BOLD,24));
-       label.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        JLabel label = new JLabel("Taisho",SwingConstants.LEFT);
+        label.setFont(new Font("Ink Free",Font.BOLD,24));
+        label.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-       setLayout(new BorderLayout());
+        setLayout(new BorderLayout());
 
-       add(label, BorderLayout.NORTH);
+        add(label, BorderLayout.NORTH);
 
-       setVisible(true);
+        setVisible(true);
 
-       JButton btnFecharRestaurante = new JButton("Sair");
-       btnFecharRestaurante.setFocusPainted(false);
-       btnFecharRestaurante.setBackground(new Color(0,0,0));
-       btnFecharRestaurante.setForeground(Color.WHITE);
-       btnFecharRestaurante.setFont(new Font("Calibri",Font.BOLD,14));
-       btnFecharRestaurante.addActionListener(new ActionListener() {
-           @Override
-           public void actionPerformed(ActionEvent e) {
-               Sair();
-               dispose();
-           }
-       });
-       topPanel.add(btnFecharRestaurante, BorderLayout.EAST);
-       add(topPanel, BorderLayout.NORTH);
+        JButton btnFecharRestaurante = new JButton("Sair");
+        btnFecharRestaurante.setFocusPainted(false);
+        btnFecharRestaurante.setBackground(new Color(0,0,0));
+        btnFecharRestaurante.setForeground(Color.WHITE);
+        btnFecharRestaurante.setFont(new Font("Calibri",Font.BOLD,14));
+        btnFecharRestaurante.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Sair();
+                dispose();
+            }
+        });
+        topPanel.add(btnFecharRestaurante, BorderLayout.EAST);
+        add(topPanel, BorderLayout.NORTH);
 
-       desktopPane = new JDesktopPane();
-       add(desktopPane, BorderLayout.CENTER);
+        desktopPane = new JDesktopPane();
+        add(desktopPane, BorderLayout.CENTER);
 
-       JanelaInfo();
-       BotaoCompra();
-       pratosAdicionados = new HashMap<>();
+        JanelaInfo();
+        BotaoCompra();
+        pratosAdicionados = new HashMap<>();
 
-       setVisible(true);
-   }
+        setVisible(true);
+    }
 
     public void Sair(){
         dispose();
     }
 
     private void JanelaInfo(){
-       JInternalFrame janelaInf = new JInternalFrame("Cardapio",true,false,false,false);
-       janelaInf.setSize(687,445);
-       janelaInf.setLayout(new FlowLayout());
+        JInternalFrame janelaInf = new JInternalFrame("Cardapio",true,false,false,false);
+        janelaInf.setSize(687,445);
+        janelaInf.setLayout(new FlowLayout());
 
-       String[] colunas = {"Nome", "Preço", "Descrição", "Chefe", "Adicionar"};
+        String[] colunas = {"Nome", "Preço", "Descrição", "Chefe", "Adicionar"};
 
-       DefaultTableModel modeloTabela = new DefaultTableModel(colunas, 0){
-           public boolean isCellEditable(int row, int column){
-               return column == 4;
-           }
+        DefaultTableModel modeloTabela = new DefaultTableModel(colunas, 0){
+            public boolean isCellEditable(int row, int column){
+                return column == 4;
+            }
 
-       };
-       JTable tabelaPratos = new JTable(modeloTabela);
+        };
+        JTable tabelaPratos = new JTable(modeloTabela);
 
-       tabelaPratos.setRowHeight(36);
-       tabelaPratos.setFont(new Font("Calibri", Font.PLAIN, 14));
-       tabelaPratos.getColumnModel().getColumn(0).setPreferredWidth(90);
-       tabelaPratos.getColumnModel().getColumn(1).setPreferredWidth(50);
-       tabelaPratos.getColumnModel().getColumn(2).setPreferredWidth(300);
-       tabelaPratos.getColumnModel().getColumn(3).setPreferredWidth(50);
+        tabelaPratos.setRowHeight(36);
+        tabelaPratos.setFont(new Font("Calibri", Font.PLAIN, 14));
+        tabelaPratos.getColumnModel().getColumn(0).setPreferredWidth(90);
+        tabelaPratos.getColumnModel().getColumn(1).setPreferredWidth(50);
+        tabelaPratos.getColumnModel().getColumn(2).setPreferredWidth(300);
+        tabelaPratos.getColumnModel().getColumn(3).setPreferredWidth(50);
 
-       tabelaPratos.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer());
-       tabelaPratos.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(new JCheckBox(), tabelaPratos));
-       tabelaPratos.getColumnModel().getColumn(4).setPreferredWidth(80);
+        tabelaPratos.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer());
+        tabelaPratos.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(new JCheckBox(), tabelaPratos));
+        tabelaPratos.getColumnModel().getColumn(4).setPreferredWidth(80);
 
 
-       JScrollPane scrollPane = new JScrollPane(tabelaPratos);
-       janelaInf.add(scrollPane, BorderLayout.CENTER);
+        JScrollPane scrollPane = new JScrollPane(tabelaPratos);
+        janelaInf.add(scrollPane, BorderLayout.CENTER);
 
-       CarregarDados(modeloTabela);
+        CarregarDados(modeloTabela);
 
-       janelaInf.setVisible(true);
-       desktopPane.add(janelaInf);
+        janelaInf.setVisible(true);
+        desktopPane.add(janelaInf);
 
     }
 
@@ -133,10 +133,10 @@ public class InterfaceCliente extends JFrame{
     }
 
     private void BotaoCompra(){
-       JPanel botaoComprar = new JPanel();
+        JPanel botaoComprar = new JPanel();
         botaoComprar.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 10));
 
-       JButton btnCompra = new JButton("Finalizar Pedido");
+        JButton btnCompra = new JButton("Finalizar Pedido");
         btnCompra.setFocusPainted(false);
         btnCompra.setBackground(new Color(0,0,0));
         btnCompra.setForeground(Color.WHITE);
@@ -175,7 +175,7 @@ public class InterfaceCliente extends JFrame{
     }
 
     private double obterPreco(String nomePrato){
-       return precosPratos.getOrDefault(nomePrato, 0.0);
+        return precosPratos.getOrDefault(nomePrato, 0.0);
     }
 
 
@@ -193,25 +193,25 @@ public class InterfaceCliente extends JFrame{
     }
 
     class ButtonEditor extends DefaultCellEditor {
-       private JButton button;
-       private String label;
-       private boolean isPushed;
-       private JTable table;
+        private JButton button;
+        private String label;
+        private boolean isPushed;
+        private JTable table;
 
-       public ButtonEditor(JCheckBox checkBox, JTable table){
-           super(checkBox);
-           this.table = table;
-           button = new JButton();
-           button.setOpaque(true);
-           button.addActionListener(new ActionListener() {
-               public void actionPerformed(ActionEvent e) {
-                   int row = table.getSelectedRow();
-                   String nome = table.getValueAt(row, 0).toString();
-                   pratosAdicionados.put(nome, pratosAdicionados.getOrDefault(nome, 0) + 1);
-                   fireEditingStopped();
-               }
-           });
-       }
+        public ButtonEditor(JCheckBox checkBox, JTable table){
+            super(checkBox);
+            this.table = table;
+            button = new JButton();
+            button.setOpaque(true);
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    int row = table.getSelectedRow();
+                    String nome = table.getValueAt(row, 0).toString();
+                    pratosAdicionados.put(nome, pratosAdicionados.getOrDefault(nome, 0) + 1);
+                    fireEditingStopped();
+                }
+            });
+        }
 
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
