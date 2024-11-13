@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ public class InterfaceAberto extends JFrame {
     private JDesktopPane desktopPane;
     private Map<String, Integer> pratosAdicionados;
     private Map<String, Double> precosPratos;
+    private ArrayList<Chefe> chefes = new ArrayList<>();
 
     public InterfaceAberto() {
         setTitle("Taisho Restaurante");
@@ -119,7 +121,7 @@ public class InterfaceAberto extends JFrame {
                     String descricao = dados[2];
                     String chefe = dados[3];
 
-                    precosPratos.put(nome, preco);
+//                    precosPratos.put(nome, preco);
 
                     modeloTabela.addRow(new Object[]{nome, preco, descricao, chefe, "Rmv"});
                 }
@@ -129,8 +131,6 @@ public class InterfaceAberto extends JFrame {
         }
     }
 
-
-
     private void SalvarItens() {
         System.out.println("Caminho do diretório atual: " + System.getProperty("user.dir"));
 
@@ -138,7 +138,7 @@ public class InterfaceAberto extends JFrame {
             for (Map.Entry<String, Integer> entry : pratosAdicionados.entrySet()) {
                 String prato = entry.getKey();
                 int quantidade = entry.getValue();
-                double precoUnitario = obterPreco(prato);
+                double precoUnitario = getPreco(prato);
                 double total = precoUnitario * quantidade;
 
                 writer.write("Prato: " + prato + " - Quantidade: " + quantidade + " - Preço Unitário: R$ " + precoUnitario + " - Total: R$ " + total);
@@ -149,7 +149,7 @@ public class InterfaceAberto extends JFrame {
         }
     }
 
-    private double obterPreco(String nomePrato) {
+    private double getPreco(String nomePrato) {
         return precosPratos.getOrDefault(nomePrato, 0.0);
     }
 
@@ -255,24 +255,8 @@ public class InterfaceAberto extends JFrame {
 
     private void JanelaBotoes(){
         JPanel painelBotoes = new JPanel();
-        painelBotoes.setLayout(new GridLayout(3, 2, 10, 10));
+        painelBotoes.setLayout(new GridLayout(  1, 3, 15, 5));
 
-        JButton btnAdicionarGarcom = new JButton("Adicionar Garçom");
-        btnAdicionarGarcom.setFocusPainted(false);
-        btnAdicionarGarcom.setBackground(new Color(0,0,0));
-        btnAdicionarGarcom.setForeground(Color.WHITE);
-        btnAdicionarGarcom.setFont(new Font("Calibri",Font.BOLD,14));
-        btnAdicionarGarcom.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                criarFormularioGarcom();
-            }}) ;
-
-        JButton btnRemoverGarcom = new JButton("Remover Garçom");
-        btnRemoverGarcom.setFocusPainted(false);
-        btnRemoverGarcom.setBackground(new Color(0,0,0));
-        btnRemoverGarcom.setForeground(Color.WHITE);
-        btnRemoverGarcom.setFont(new Font("Calibri",Font.BOLD,14));
 
         JButton btnAdicionarPrato = new JButton("Adicionar Prato");
         btnAdicionarPrato.setFocusPainted(false);
@@ -298,9 +282,6 @@ public class InterfaceAberto extends JFrame {
         btnRemoverChefe.setForeground(Color.WHITE);
         btnRemoverChefe.setFont(new Font("Calibri",Font.BOLD,14));
 
-
-
-
         btnRemoverChefe.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -308,12 +289,6 @@ public class InterfaceAberto extends JFrame {
             }
         });
 
-        btnRemoverGarcom.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(InterfaceAberto.this,"Garçom removido.");
-            }
-        });
 
         btnAdicionarPrato.addActionListener(new ActionListener() {
             @Override
@@ -322,30 +297,93 @@ public class InterfaceAberto extends JFrame {
             }
         });
 
-
-
-        painelBotoes.add(btnAdicionarGarcom);
-        painelBotoes.add(btnRemoverGarcom);
         painelBotoes.add(btnAdicionarChefe);
         painelBotoes.add(btnRemoverChefe);
         painelBotoes.add(btnAdicionarPrato);
 
-        painelBotoes.setBounds(375, 500, 400, 200); // Ajuste a posição conforme necessário
-
-
+        painelBotoes.setBounds(375, 500, 400, 200);
 
         desktopPane.add(painelBotoes);
+    }
+
+    private void mostrarChefes(JPanel painelChefes){
+        painelChefes.removeAll(); // Limpa o painel antes de adicionar os chefes
+        for (Chefe chefe : chefes) {
+            JLabel labelChefe = new JLabel("Nome: " + chefe.getNome() + ", ID: " + chefe.getIdentificador() + ", Salário: " + chefe.getSalario());
+            painelChefes.add(labelChefe);
+        }
+        painelChefes.revalidate();
+        painelChefes.repaint();
     }
 
     private void criarPrato(){
 
     }
 
-    private void criarFormularioGarcom(){
-
-    }
-
     private void criarFormularioChefe(){
+        JFrame formFrame = new JFrame("Adicionar Chefe");
+        formFrame.setSize(400,400);
+        formFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        formFrame.setLocationRelativeTo(this);
 
-    }
+        JPanel formPanel = new JPanel(new GridLayout(9,2,5,5));
+        formPanel.setBorder(BorderFactory.createTitledBorder("Adicionar Chefe"));
+
+        JTextField nomeField = new JTextField();
+        JTextField cargoField = new JTextField();
+        JTextField idadeField = new JTextField();
+        JTextField salarioField = new JTextField();
+        JTextField generoField = new JTextField();
+        JTextField valorFixoField = new JTextField();
+        JTextField horasTrabalhadasField = new JTextField();
+        JTextField identificadorField = new JTextField();
+
+        formPanel.add(new JLabel("Nome:"));
+        formPanel.add(nomeField);
+        formPanel.add(new JLabel("Cargo:"));
+        formPanel.add(cargoField);
+        formPanel.add(new JLabel("Idade:"));
+        formPanel.add(idadeField);
+        formPanel.add(new JLabel("Salário:"));
+        formPanel.add(salarioField);
+        formPanel.add(new JLabel("Gênero:"));
+        formPanel.add(generoField);
+        formPanel.add(new JLabel("Valor Fixo:"));
+        formPanel.add(valorFixoField);
+        formPanel.add(new JLabel("Horas Trabalhadas:"));
+        formPanel.add(horasTrabalhadasField);
+        formPanel.add(new JLabel("Identificador:"));
+        formPanel.add(identificadorField);
+
+        JButton adicionarChefeBtn = new JButton("Adicionar Chefe");
+        adicionarChefeBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    String nome = nomeField.getText();
+                    String cargo = cargoField.getText();
+                    int idade = Integer.parseInt(idadeField.getText());
+                    double salario = Double.parseDouble(salarioField.getText());
+                    String genero = generoField.getText();
+                    double valorFixo = Double.parseDouble(valorFixoField.getText());
+                    int horasTrabalhadas = Integer.parseInt(horasTrabalhadasField.getText());
+                    String identificador = identificadorField.getText();
+
+                    Chefe novoChefe = new Chefe(nome, cargo, idade, salario, genero, valorFixo, horasTrabalhadas, identificador);
+                    chefes.add(novoChefe);
+
+                    mostrarChefes((JPanel) ((JInternalFrame) desktopPane.getComponentAt(375, 10)).getContentPane().getComponent(0));
+
+
+                    formFrame.dispose();
+                    JOptionPane.showMessageDialog(InterfaceAberto.this, "Chefe adicionado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Preencha todos os campos corretamente!", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        formPanel.add(adicionarChefeBtn);
+        formFrame.add(formPanel);
+        formFrame.setVisible(true);
 }
+    }
