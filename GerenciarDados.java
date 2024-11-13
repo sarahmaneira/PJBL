@@ -19,8 +19,8 @@ public class GerenciarDados {
     private List<Garcom> garcons = new ArrayList<>();
 
     public GerenciarDados() {
-        Chefe c1 = new Chefe("Cristiano", "Chefe", 28, 4500.0, "Masculino", 204.55, 8);
-        Chefe c2 = new Chefe("Gustavo", "Chefe", 36, 4500.0, "Masculino", 204.55, 8);
+        Chefe c1 = new Chefe("Cristiano", "Chefe", 28, 4500.00, "Masculino", 204.55, 8);
+        Chefe c2 = new Chefe("Gustavo", "Chefe", 36, 4500.00, "Masculino", 204.55, 8);
         chefes.add(c1);
         chefes.add(c2);
 
