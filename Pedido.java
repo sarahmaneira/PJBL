@@ -10,6 +10,7 @@ class Pedido {
         this.valor = valor;
         this.quantidade = quantidade;
     }
+
     public double calcularTotal(){
         return valor * quantidade;
     }

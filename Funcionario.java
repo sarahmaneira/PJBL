@@ -33,5 +33,6 @@ public abstract class Funcionario {
         return genero;
     }
 
+    public abstract void realizarTarefa();
 
 }

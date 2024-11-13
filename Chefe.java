@@ -14,6 +14,11 @@ public class Chefe extends Funcionario {
         this.identificador = identificador;
     }
 
+    @Override
+    public void realizarTarefa() {
+        System.out.println("O chefe " + getNome() + " está supervisionando a cozinha e criando novos pratos.");
+    }
+
     public void adicionarPrato(Prato p){
         prato.add(p);
     }

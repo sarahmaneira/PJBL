@@ -13,17 +13,28 @@ public class Restaurante {
         this.endereco = endereco;
     }
 
-    public void abrirRestaurante(){
-        System.out.println("Restaurante aberto");
+    public void adicionarFuncionario(Funcionario funcionario){
+        funcionarios.add(funcionario);
     }
 
-    public void fecharRestaurante(){
-        System.out.println("Restaurante fechado");
+    public void adicionarPedido(Pedido pedido) {
+        pedidos.add(pedido);
     }
 
-    // adicionar pedido
-    public void adicionarPedido(){
-
+    public void exibirCardapio() {
+        cardapio.exibirPratos();
     }
-    // remover pedido
+
+    public void adicionarCliente(Cliente cliente) {
+        clientes.add(cliente);
+    }
+
+    public double calcularTotalPedidos() {
+        double total = 0;
+        for (Pedido pedido : pedidos) {
+            total += pedido.calcularTotal();
+        }
+        return total;
+    }
+
 }

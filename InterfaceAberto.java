@@ -16,8 +16,8 @@ import java.util.Map;
 public class InterfaceAberto extends JFrame {
 
     private JDesktopPane desktopPane;
-    private Map<String, Integer> pratosAdicionados;
-    private Map<String, Double> precosPratos;
+    protected Map<String, Integer> pratosAdicionados;
+    protected Map<String, Double> precosPratos;
     private ArrayList<Chefe> chefes = new ArrayList<>();
     GerenciarDados gerenciador = new GerenciarDados();
     Interface interfacep = new Interface();

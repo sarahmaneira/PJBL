@@ -6,7 +6,6 @@ class Cardapio{
 
     public void adicionarPrato(Prato prato){
         pratos.add(prato);
-//        System.out.println("Prato adicionado:" + prato.getNome() + "- Valor R$:" + prato.getValor() + "- Descrição: " + prato.getDescricao());
     }
 
     public void exibirFormularioAdicionarPrato() {

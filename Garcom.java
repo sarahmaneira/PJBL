@@ -1,5 +1,3 @@
-
-
 public class Garcom extends Funcionario {
     private double valorFixo;
     private int horasTrabalhadasPorDia;
@@ -10,6 +8,11 @@ public class Garcom extends Funcionario {
         this.valorFixo = valorFixo;
         this.horasTrabalhadasPorDia = horasTrabalhadasPorDia;
         this.diasTrabalhados = diasTrabalhados;
+    }
+
+    @Override
+    public void realizarTarefa() {
+        System.out.println("O garçom " + getNome() + " está servindo os clientes.");
     }
 
 
