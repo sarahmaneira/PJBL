@@ -228,7 +228,7 @@ public class InterfaceAberto extends JFrame {
         painelChefes.setLayout(new BoxLayout(painelChefes, BoxLayout.Y_AXIS));
 
         for (Chefe chefe : gerenciador.getChefes()) {
-            JLabel chefeLabel = new JLabel("Nome: " + chefe.getNome() + ", Identificador: " + chefe.getIdentificador());
+            JLabel chefeLabel = new JLabel("Nome: " + chefe.getNome());
             painelChefes.add(chefeLabel);
         }
 
@@ -245,7 +245,7 @@ public class InterfaceAberto extends JFrame {
 
         // Adiciona as informações de cada chefe como uma nova linha
         for (Chefe chefe : chefes) {
-            JLabel labelChefe = new JLabel("Chefe: " + chefe.getNome() + ", ID: " + chefe.getIdentificador());
+            JLabel labelChefe = new JLabel("Chefe: " + chefe.getNome());
             painelChefes.add(labelChefe);
         }
 
@@ -284,8 +284,8 @@ public class InterfaceAberto extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 Chefe novoChefe = Chefe.exibirFormularioChefe();
                 if (novoChefe != null) {
-                    gerenciador.adicionarChefe(novoChefe); // Adiciona o chefe à lista em GerenciarDados
-                    atualizarJanelaChefes(); // Atualiza a janela para exibir o novo chefe
+                    gerenciador.adicionarChefe(novoChefe);
+                    atualizarJanelaChefes();
                 }
             }
         });
@@ -303,11 +303,9 @@ public class InterfaceAberto extends JFrame {
             }
         });
 
-
         painelBotoes.add(btnAdicionarChefe);
         painelBotoes.add(btnRemoverChefe);
         painelBotoes.add(btnAdicionarPrato);
-
 
         painelBotoes.setBounds(250, 500, 700, 50);
 

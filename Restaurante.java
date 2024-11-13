@@ -21,9 +21,6 @@ public class Restaurante {
         pedidos.add(pedido);
     }
 
-    public void exibirCardapio() {
-        cardapio.exibirPratos();
-    }
 
     public void adicionarCliente(Cliente cliente) {
         clientes.add(cliente);

@@ -3,10 +3,9 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Chefe extends Funcionario {
-    private String identificador;
     private double valorFixo;
     private int horasTrabalhadas;
-    private ArrayList<Prato> prato = new ArrayList<>();
+    private ArrayList<Prato> pratos = new ArrayList<>();
 
     public Chefe(String nome, String cargo, int idade, double salario, String genero, double valorFixo, int horasTrabalhadas) {
         super(nome, cargo, idade, salario, genero);
@@ -19,13 +18,11 @@ public class Chefe extends Funcionario {
         System.out.println("O chefe " + getNome() + " está supervisionando a cozinha e criando novos pratos.");
     }
 
-    public void adicionarPrato(Prato p){prato.add(p);}
-
-    
-        
+    public void adicionarPrato(Prato p) {
+        pratos.add(p);
     }
 
-     public static Chefe exibirFormularioChefe() {
+    public static Chefe exibirFormularioChefe() {
         JTextField nomeField = new JTextField(20);
         JTextField cargoField = new JTextField(20);
         JTextField idadeField = new JTextField(20);
@@ -35,7 +32,7 @@ public class Chefe extends Funcionario {
         JTextField horasTrabalhadasField = new JTextField(20);
 
         JPanel formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(8, 2, 10, 10)); // 3 linhas, 2 colunas, com espaçamento de 10 pixels
+        formPanel.setLayout(new GridLayout(8, 2, 10, 10));
 
         formPanel.add(new JLabel("Nome:"));
         formPanel.add(nomeField);
@@ -67,10 +64,6 @@ public class Chefe extends Funcionario {
         return null;
     }
 
-    public String getIdentificador() {
-        return identificador;
-    }
-
     public double getValorFixo() {
         return valorFixo;
     }
@@ -81,6 +74,6 @@ public class Chefe extends Funcionario {
 
     @Override
     public String toString() {
-        return "Chefe: " + getNome() + ", ID: " + identificador + ", Salário: R$" + getSalario();
+        return "Chefe: " + getNome() + ", Salário: R$" + getSalario();
     }
 }

@@ -17,10 +17,6 @@ public abstract class Funcionario {
         return nome;
     }
 
-    public double getSalario() {
-        return salario;
-    }
-
     public String getCargo() {
         return cargo;
     }
@@ -29,10 +25,14 @@ public abstract class Funcionario {
         return idade;
     }
 
+    public double getSalario() {
+        return salario;
+    }
+
     public String getGenero() {
         return genero;
     }
 
+    // Método abstrato que deve ser implementado pelas subclasses
     public abstract void realizarTarefa();
-
 }
