@@ -1,10 +1,5 @@
-class pedidoInvalidoException extends Exception{
-    public pedidoInvalidoException(){
-        super();
-    }
-
-    @Override
-    public String toString() {
-        return "Nenhum prato selecionado";
+public class Erro extends Exception{
+    public Erro(String mensagem){
+        super(mensagem);
     }
 }

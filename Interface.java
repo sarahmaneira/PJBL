@@ -26,7 +26,11 @@ public class Interface extends JFrame {
         btnGerenciarRestaurante.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new InterfaceAberto();
+                try {
+                    new InterfaceAberto();
+                } catch (Erro ex) {
+                    throw new RuntimeException(ex);
+                }
                 dispose();
             }
         });
@@ -52,14 +56,9 @@ public class Interface extends JFrame {
         setVisible(true);
     }
 
-
     public void fecharRestaurante(){
         JOptionPane.showMessageDialog(this, "Restaurante Fechado!", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
     }
-
-
-
-
 
     public static void main(String[] args) {
         new Interface(); // Cria a janela

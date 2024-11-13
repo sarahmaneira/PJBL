@@ -1,7 +1,5 @@
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableCellEditor;
+import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +10,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class InterfaceAberto extends JFrame {
@@ -20,8 +19,10 @@ public class InterfaceAberto extends JFrame {
     private Map<String, Integer> pratosAdicionados;
     private Map<String, Double> precosPratos;
     private ArrayList<Chefe> chefes = new ArrayList<>();
+    GerenciarDados gerenciador = new GerenciarDados();
 
-    public InterfaceAberto() {
+
+    public InterfaceAberto() throws Erro {
         setTitle("Taisho Restaurante");
         setSize(1200, 880);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -74,13 +75,12 @@ public class InterfaceAberto extends JFrame {
         JOptionPane.showMessageDialog(this, "Restaurante Fechado!", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    private void JanelaInfo() {
+    private void JanelaInfo() throws Erro {
         JInternalFrame janelaInf = new JInternalFrame("Cardápio", true, false, false, false);
         janelaInf.setSize(500, 450);
         janelaInf.setLayout(new FlowLayout());
 
         String[] colunas = {"Nome", "Preço", "Descrição", "Chefe", "Remover"};
-
         DefaultTableModel modeloTabela = new DefaultTableModel(colunas, 0) {
             public boolean isCellEditable(int row, int column) {
                 return column == 4;
@@ -102,33 +102,14 @@ public class InterfaceAberto extends JFrame {
         JScrollPane scrollPane = new JScrollPane(tabelaPratos);
         janelaInf.add(scrollPane, BorderLayout.CENTER);
 
-        CarregarDados(modeloTabela);
+
+        List<Prato> pratos = gerenciador.lerArquivo();
+        for (Prato prato : pratos) {
+            modeloTabela.addRow(new Object[]{prato.getNome(), prato.getValor(), prato.getDescricao(), prato.getChefeResponsavel(), "RMV"});
+        }
 
         janelaInf.setVisible(true);
         desktopPane.add(janelaInf);
-    }
-
-    private void CarregarDados(DefaultTableModel modeloTabela) {
-        precosPratos = new HashMap<>();
-
-        try (BufferedReader br = new BufferedReader(new FileReader("pratos.csv"))) {
-            String linha;
-            while ((linha = br.readLine()) != null) {
-                String[] dados = linha.split(";");
-                if (dados.length == 4) {
-                    String nome = dados[0];
-                    double preco = Double.parseDouble(dados[1]);
-                    String descricao = dados[2];
-                    String chefe = dados[3];
-
-//                    precosPratos.put(nome, preco);
-
-                    modeloTabela.addRow(new Object[]{nome, preco, descricao, chefe, "Rmv"});
-                }
-            }
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Erro ao carregar o cardápio.", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
     }
 
     private void SalvarItens() {
@@ -156,7 +137,6 @@ public class InterfaceAberto extends JFrame {
     private void RemoverPrato(String prato) {
 
         pratosAdicionados.remove(prato);
-
 
         try {
             BufferedReader br = new BufferedReader(new FileReader("pratos.csv"));
@@ -230,7 +210,7 @@ public class InterfaceAberto extends JFrame {
         }
     }
 
-    private void JanelaGarcom(){
+    private void JanelaGarcom() {
         JInternalFrame janelaGarcons = new JInternalFrame("Garçons", true, false, false, false);
         janelaGarcons.setSize(650, 210);
         janelaGarcons.setLayout(new FlowLayout());
@@ -241,51 +221,69 @@ public class InterfaceAberto extends JFrame {
         desktopPane.add(janelaGarcons);
     }
 
-    private void JanelaChefes(){
+    private void JanelaChefes() {
         JInternalFrame janelaChefes = new JInternalFrame("Chefes", true, false, false, false);
         janelaChefes.setSize(650, 210);
         janelaChefes.setLayout(new FlowLayout());
-
-
         janelaChefes.setLocation(535, 0);
 
+        // Painel para mostrar informações dos chefes
+        JPanel painelChefes = new JPanel();
+        painelChefes.setLayout(new BoxLayout(painelChefes, BoxLayout.Y_AXIS));
+
+        // Obter a lista de chefes e exibir cada um
+        for (Chefe chefe : gerenciador.getChefes()) { // gerenciador é sua instância de GerenciarDados
+            JLabel chefeLabel = new JLabel("Nome: " + chefe.getNome() + ", Identificador: " + chefe.getIdentificador());
+            painelChefes.add(chefeLabel);
+        }
+
+        janelaChefes.add(painelChefes);
         janelaChefes.setVisible(true);
         desktopPane.add(janelaChefes);
     }
 
-    private void JanelaBotoes(){
+    private void JanelaBotoes() {
         JPanel painelBotoes = new JPanel();
-        painelBotoes.setLayout(new GridLayout(  1, 3, 15, 5));
+        painelBotoes.setLayout(new GridLayout(1, 3, 15, 5));
+
+        Cardapio cardapio = new Cardapio();
+        Chefe chefe1 = new Chefe("Cristiano", "Chefe", 28, 4500.0, "Masculino", 204.55, 8, "c1");
+        Chefe chefe2 = new Chefe("Gustavo", "Chefe", 36, 4500.0, "Masculino", 204.55, 8, "c2");
 
 
         JButton btnAdicionarPrato = new JButton("Adicionar Prato");
         btnAdicionarPrato.setFocusPainted(false);
-        btnAdicionarPrato.setBackground(new Color(0,0,0));
+        btnAdicionarPrato.setBackground(new Color(0, 0, 0));
         btnAdicionarPrato.setForeground(Color.WHITE);
-        btnAdicionarPrato.setFont(new Font("Calibri",Font.BOLD,14));
-
+        btnAdicionarPrato.setFont(new Font("Calibri", Font.BOLD, 14));
+        btnAdicionarPrato.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardapio.exibirFormularioAdicionarPrato();
+            }
+        });
         JButton btnAdicionarChefe = new JButton("Adicionar Chefe");
         btnAdicionarChefe.setFocusPainted(false);
-        btnAdicionarChefe.setBackground(new Color(0,0,0));
+        btnAdicionarChefe.setBackground(new Color(0, 0, 0));
         btnAdicionarChefe.setForeground(Color.WHITE);
-        btnAdicionarChefe.setFont(new Font("Calibri",Font.BOLD,14));
+        btnAdicionarChefe.setFont(new Font("Calibri", Font.BOLD, 14));
         btnAdicionarChefe.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                criarFormularioChefe();
+                chefe1.exibirFormularioChefe();
             }
         });
 
         JButton btnRemoverChefe = new JButton("Remover Chefe");
         btnRemoverChefe.setFocusPainted(false);
-        btnRemoverChefe.setBackground(new Color(0,0,0));
+        btnRemoverChefe.setBackground(new Color(0, 0, 0));
         btnRemoverChefe.setForeground(Color.WHITE);
-        btnRemoverChefe.setFont(new Font("Calibri",Font.BOLD,14));
+        btnRemoverChefe.setFont(new Font("Calibri", Font.BOLD, 14));
 
         btnRemoverChefe.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(InterfaceAberto.this,"Chefe removido.");
+                JOptionPane.showMessageDialog(InterfaceAberto.this, "Chefe removido.");
             }
         });
 
@@ -306,7 +304,7 @@ public class InterfaceAberto extends JFrame {
         desktopPane.add(painelBotoes);
     }
 
-    private void mostrarChefes(JPanel painelChefes){
+    private void mostrarChefes(JPanel painelChefes) {
         painelChefes.removeAll(); // Limpa o painel antes de adicionar os chefes
         for (Chefe chefe : chefes) {
             JLabel labelChefe = new JLabel("Nome: " + chefe.getNome() + ", ID: " + chefe.getIdentificador() + ", Salário: " + chefe.getSalario());
@@ -316,74 +314,8 @@ public class InterfaceAberto extends JFrame {
         painelChefes.repaint();
     }
 
-    private void criarPrato(){
+    private void criarPrato() {
 
     }
-
-    private void criarFormularioChefe(){
-        JFrame formFrame = new JFrame("Adicionar Chefe");
-        formFrame.setSize(400,400);
-        formFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        formFrame.setLocationRelativeTo(this);
-
-        JPanel formPanel = new JPanel(new GridLayout(9,2,5,5));
-        formPanel.setBorder(BorderFactory.createTitledBorder("Adicionar Chefe"));
-
-        JTextField nomeField = new JTextField();
-        JTextField cargoField = new JTextField();
-        JTextField idadeField = new JTextField();
-        JTextField salarioField = new JTextField();
-        JTextField generoField = new JTextField();
-        JTextField valorFixoField = new JTextField();
-        JTextField horasTrabalhadasField = new JTextField();
-        JTextField identificadorField = new JTextField();
-
-        formPanel.add(new JLabel("Nome:"));
-        formPanel.add(nomeField);
-        formPanel.add(new JLabel("Cargo:"));
-        formPanel.add(cargoField);
-        formPanel.add(new JLabel("Idade:"));
-        formPanel.add(idadeField);
-        formPanel.add(new JLabel("Salário:"));
-        formPanel.add(salarioField);
-        formPanel.add(new JLabel("Gênero:"));
-        formPanel.add(generoField);
-        formPanel.add(new JLabel("Valor Fixo:"));
-        formPanel.add(valorFixoField);
-        formPanel.add(new JLabel("Horas Trabalhadas:"));
-        formPanel.add(horasTrabalhadasField);
-        formPanel.add(new JLabel("Identificador:"));
-        formPanel.add(identificadorField);
-
-        JButton adicionarChefeBtn = new JButton("Adicionar Chefe");
-        adicionarChefeBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    String nome = nomeField.getText();
-                    String cargo = cargoField.getText();
-                    int idade = Integer.parseInt(idadeField.getText());
-                    double salario = Double.parseDouble(salarioField.getText());
-                    String genero = generoField.getText();
-                    double valorFixo = Double.parseDouble(valorFixoField.getText());
-                    int horasTrabalhadas = Integer.parseInt(horasTrabalhadasField.getText());
-                    String identificador = identificadorField.getText();
-
-                    Chefe novoChefe = new Chefe(nome, cargo, idade, salario, genero, valorFixo, horasTrabalhadas, identificador);
-                    chefes.add(novoChefe);
-
-                    mostrarChefes((JPanel) ((JInternalFrame) desktopPane.getComponentAt(375, 10)).getContentPane().getComponent(0));
-
-
-                    formFrame.dispose();
-                    JOptionPane.showMessageDialog(InterfaceAberto.this, "Chefe adicionado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "Preencha todos os campos corretamente!", "Erro", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
-        formPanel.add(adicionarChefeBtn);
-        formFrame.add(formPanel);
-        formFrame.setVisible(true);
 }
-    }
+
