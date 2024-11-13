@@ -33,6 +33,6 @@ public abstract class Funcionario {
         return genero;
     }
 
-    // Método abstrato que deve ser implementado pelas subclasses
+
     public abstract void realizarTarefa();
 }
