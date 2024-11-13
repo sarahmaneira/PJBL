@@ -26,7 +26,7 @@ public class InterfaceAberto extends JFrame {
 
     public InterfaceAberto() throws Erro {
         setTitle("Taisho Restaurante");
-        setSize(1200, 880);
+        setSize(1200, 800);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -132,27 +132,8 @@ public class InterfaceAberto extends JFrame {
     }
 
     private void RemoverPrato(String prato) {
-
-        pratosAdicionados.remove(prato);
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("pratos.csv"));
-            StringBuilder sb = new StringBuilder();
-            String linha;
-            while ((linha = br.readLine()) != null) {
-                String[] dados = linha.split(";");
-                if (!dados[0].equals(prato)) {
-                    sb.append(linha).append("\n");
-                }
-            }
-            br.close();
-
-            BufferedWriter bw = new BufferedWriter(new FileWriter("pratos.csv"));
-            bw.write(sb.toString());
-            bw.close();
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Erro ao remover prato do cardápio.", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
+        Cardapio cardapio = new Cardapio();
+        cardapio.removerPrato(prato);
     }
 
     class ButtonRenderer extends JButton implements TableCellRenderer {
@@ -307,7 +288,7 @@ public class InterfaceAberto extends JFrame {
         painelBotoes.add(btnRemoverChefe);
         painelBotoes.add(btnAdicionarPrato);
 
-        painelBotoes.setBounds(250, 500, 700, 50);
+        painelBotoes.setBounds(250, 570, 700, 50);
 
         desktopPane.add(painelBotoes);
     }
