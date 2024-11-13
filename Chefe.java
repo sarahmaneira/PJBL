@@ -36,18 +36,13 @@ public class Chefe extends Funcionario {
 
         formPanel.add(new JLabel("Nome:"));
         formPanel.add(nomeField);
-        formPanel.add(new JLabel("Cargo:"));
-        formPanel.add(cargoField);
         formPanel.add(new JLabel("Idade:"));
         formPanel.add(idadeField);
         formPanel.add(new JLabel("Salário:"));
         formPanel.add(salarioField);
         formPanel.add(new JLabel("Gênero:"));
         formPanel.add(generoField);
-        formPanel.add(new JLabel("Valor Fixo:"));
-        formPanel.add(valorFixoField);
-        formPanel.add(new JLabel("Horas Trabalhadas:"));
-        formPanel.add(horasTrabalhadasField);
+
 
         int option = JOptionPane.showConfirmDialog(null, formPanel, "Adicionar Chefe", JOptionPane.OK_CANCEL_OPTION);
         if (option == JOptionPane.OK_OPTION) {
