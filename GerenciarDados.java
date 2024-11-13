@@ -6,10 +6,15 @@ import java.util.List;
 public class GerenciarDados {
     private List<Prato> pratos = new ArrayList<>();
     private List<Chefe> chefes = new ArrayList<>();
+    private Cliente cliente;
 
     Chefe c1 = new Chefe("Cristiano", "Chefe", 28, 4500.0, "Masculino", 204.55, 8);
     Chefe c2 = new Chefe("Gustavo", "Chefe", 36, 4500.0, "Masculino", 204.55, 8);
+    Cliente cliente1 = new Cliente();
 
+    public void adicionarPedidoAoCliente(String pedido) {
+        cliente.fazerPedido(pedido);
+    }
 
     public void adicionarChefe(Chefe chefe) {
         chefes.add(chefe);
