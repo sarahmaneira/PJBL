@@ -20,6 +20,7 @@ public class InterfaceAberto extends JFrame {
     private Map<String, Double> precosPratos;
     private ArrayList<Chefe> chefes = new ArrayList<>();
     GerenciarDados gerenciador = new GerenciarDados();
+    Interface interfacep = new Interface();
 
 
     public InterfaceAberto() throws Erro {
@@ -51,7 +52,7 @@ public class InterfaceAberto extends JFrame {
         btnFecharRestaurante.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Sair();
+                interfacep.fecharRestaurante();
                 dispose();
             }
         });
