@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Chefe extends Funcionario {
@@ -7,19 +8,17 @@ public class Chefe extends Funcionario {
     private int horasTrabalhadas;
     private ArrayList<Prato> prato = new ArrayList<>();
 
-    public Chefe(String nome, String cargo, int idade, double salario, String genero, double valorFixo, int horasTrabalhadas, String identificador) {
+    public Chefe(String nome, String cargo, int idade, double salario, String genero, double valorFixo, int horasTrabalhadas) {
         super(nome, cargo, idade, salario, genero);
         this.valorFixo = valorFixo;
         this.horasTrabalhadas = horasTrabalhadas;
-        this.identificador = identificador;
     }
 
     public void adicionarPrato(Prato p) {
         prato.add(p);
     }
 
-    // Método de exibição do formulário de chefe com retorno do chefe criado
-    public static Chefe exibirFormularioChefe() {
+     public static Chefe exibirFormularioChefe() {
         JTextField nomeField = new JTextField(20);
         JTextField cargoField = new JTextField(20);
         JTextField idadeField = new JTextField(20);
@@ -27,9 +26,10 @@ public class Chefe extends Funcionario {
         JTextField generoField = new JTextField(20);
         JTextField valorFixoField = new JTextField(20);
         JTextField horasTrabalhadasField = new JTextField(20);
-        JTextField identificadorField = new JTextField(20);
 
         JPanel formPanel = new JPanel();
+        formPanel.setLayout(new GridLayout(8, 2, 10, 10)); // 3 linhas, 2 colunas, com espaçamento de 10 pixels
+
         formPanel.add(new JLabel("Nome:"));
         formPanel.add(nomeField);
         formPanel.add(new JLabel("Cargo:"));
@@ -44,8 +44,6 @@ public class Chefe extends Funcionario {
         formPanel.add(valorFixoField);
         formPanel.add(new JLabel("Horas Trabalhadas:"));
         formPanel.add(horasTrabalhadasField);
-        formPanel.add(new JLabel("Identificador:"));
-        formPanel.add(identificadorField);
 
         int option = JOptionPane.showConfirmDialog(null, formPanel, "Adicionar Chefe", JOptionPane.OK_CANCEL_OPTION);
         if (option == JOptionPane.OK_OPTION) {
@@ -56,11 +54,10 @@ public class Chefe extends Funcionario {
             String genero = generoField.getText();
             double valorFixo = Double.parseDouble(valorFixoField.getText());
             int horasTrabalhadas = Integer.parseInt(horasTrabalhadasField.getText());
-            String identificador = identificadorField.getText();
 
-            return new Chefe(nome, cargo, idade, salario, genero, valorFixo, horasTrabalhadas, identificador);
+            return new Chefe(nome, cargo, idade, salario, genero, valorFixo, horasTrabalhadas);
         }
-        return null; // Caso o usuário cancele a entrada de dados
+        return null;
     }
 
     public String getIdentificador() {
@@ -75,7 +72,6 @@ public class Chefe extends Funcionario {
         return horasTrabalhadas;
     }
 
-    // Método para retornar uma string com os dados do chefe, útil para exibição
     @Override
     public String toString() {
         return "Chefe: " + getNome() + ", ID: " + identificador + ", Salário: R$" + getSalario();
