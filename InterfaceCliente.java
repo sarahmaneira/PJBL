@@ -75,11 +75,11 @@ public class InterfaceCliente extends JFrame{
         janelaInf.setSize(687,445);
         janelaInf.setLayout(new FlowLayout());
 
-        String[] colunas = {"Nome", "Preço", "Descrição", "Chefe", "Adicionar"};
+        String[] colunas = {"Nome", "Preço", "Descrição", "Adicionar"};
 
         DefaultTableModel modeloTabela = new DefaultTableModel(colunas, 0){
             public boolean isCellEditable(int row, int column){
-                return column == 4;
+                return column == 3;
             }
 
         };
@@ -90,11 +90,10 @@ public class InterfaceCliente extends JFrame{
         tabelaPratos.getColumnModel().getColumn(0).setPreferredWidth(90);
         tabelaPratos.getColumnModel().getColumn(1).setPreferredWidth(50);
         tabelaPratos.getColumnModel().getColumn(2).setPreferredWidth(300);
-        tabelaPratos.getColumnModel().getColumn(3).setPreferredWidth(50);
 
-        tabelaPratos.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer());
-        tabelaPratos.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(new JCheckBox(), tabelaPratos));
-        tabelaPratos.getColumnModel().getColumn(4).setPreferredWidth(80);
+        tabelaPratos.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer());
+        tabelaPratos.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(new JCheckBox(), tabelaPratos));
+        tabelaPratos.getColumnModel().getColumn(3).setPreferredWidth(80);
 
 
         JScrollPane scrollPane = new JScrollPane(tabelaPratos);
@@ -114,17 +113,15 @@ public class InterfaceCliente extends JFrame{
             String linha;
             while ((linha = br.readLine()) != null) {
                 String[] dados = linha.split(";");
-                if (dados.length == 4) {
+                if (dados.length == 3) {
                     String nome = dados[0];
                     double preco = Double.parseDouble(dados[1]);
                     String descricao = dados[2];
-                    String chefe = dados[3];
-
 
                     precosPratos.put(nome, preco);
 
 
-                    modeloTabela.addRow(new Object[]{nome, preco, descricao, chefe, "Add"});
+                    modeloTabela.addRow(new Object[]{nome, preco, descricao, "Add"});
                 }
             }
         } catch (IOException e) {
@@ -180,8 +177,6 @@ public class InterfaceCliente extends JFrame{
     private double obterPreco(String nomePrato){
         return precosPratos.getOrDefault(nomePrato, 0.0);
     }
-
-
 
     class ButtonRenderer extends JButton implements TableCellRenderer {
         public ButtonRenderer(){
