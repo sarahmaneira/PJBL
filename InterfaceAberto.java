@@ -96,7 +96,7 @@ public class InterfaceAberto extends JFrame {
 
         List<Prato> pratos = gerenciador.lerArquivo();
         for (Prato prato : pratos) {
-            modeloTabela.addRow(new Object[]{prato.getNome(), prato.getValor(), prato.getDescricao(), "Remover"});
+            modeloTabela.addRow(new Object[]{prato.getNome(), prato.getValor(), prato.getDescricao(), "RMV"});
         }
 
         janelaInf.setVisible(true);
