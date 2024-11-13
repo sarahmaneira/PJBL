@@ -21,7 +21,8 @@ public class InterfaceAberto extends JFrame {
     GerenciarDados gerenciador = new GerenciarDados();
     private JInternalFrame janelaChefes;
     private JPanel painelChefes;
-
+    Interface interfacep = new Interface();
+   
 
     public InterfaceAberto() throws Erro {
         setTitle("Taisho Restaurante");
@@ -52,7 +53,7 @@ public class InterfaceAberto extends JFrame {
         btnFecharRestaurante.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Sair();
+                interfacep.fecharRestaurante();
                 dispose();
             }
         });

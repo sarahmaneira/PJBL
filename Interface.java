@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 
 public class Interface extends JFrame {
@@ -56,8 +57,8 @@ public class Interface extends JFrame {
         setVisible(true);
     }
 
-    public void fecharRestaurante(){
-        JOptionPane.showMessageDialog(this, "Restaurante Fechado!", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+    public static void fecharRestaurante(){
+        JOptionPane.showMessageDialog(null, "Restaurante Fechado!", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public static void main(String[] args) {

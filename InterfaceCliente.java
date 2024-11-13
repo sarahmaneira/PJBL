@@ -163,10 +163,13 @@ public class InterfaceCliente extends JFrame{
                 String prato = entry.getKey();
                 int quantidade = entry.getValue();
                 double precoUnitario = obterPreco(prato);
-                double total = precoUnitario * quantidade;
 
-                writer.write("Prato: " + prato + " - Quantidade: " + quantidade + " - Preço Unitário: R$ " + precoUnitario + " - Total: R$ " + total);
+                Pedido pedido = new Pedido(quantidade, prato, (int) precoUnitario, quantidade);
+
+                writer.write("Prato: " + pedido.descricao + " - Quantidade: " + pedido.quantidade + " - Preço Unitário: R$ " + precoUnitario + " - Total: R$ " + pedido.calcularTotal());
                 writer.newLine();
+
+                pedido.mostrarPedido();
             }
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Erro ao salvar os itens.", "Erro", JOptionPane.ERROR_MESSAGE);
