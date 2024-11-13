@@ -16,12 +16,31 @@ public class GerenciarDados {
         cliente.fazerPedido(pedido);
     }
 
+    private List<Garcom> garcons = new ArrayList<>();
+
+    public GerenciarDados() {
+        Chefe c1 = new Chefe("Cristiano", "Chefe", 28, 4500.0, "Masculino", 204.55, 8);
+        Chefe c2 = new Chefe("Gustavo", "Chefe", 36, 4500.0, "Masculino", 204.55, 8);
+        chefes.add(c1);
+        chefes.add(c2);
+
+        Garcom g1 = new Garcom("Marcos", "Garçom", 22, 2000.0, "Masculino", 100.0, 8, 20);
+        Garcom g2 = new Garcom("Ana", "Garçonete", 30, 2200.0, "Feminino", 110.0, 8, 22);
+        garcons.add(g1);
+        garcons.add(g2);
+
+    }
+
     public void adicionarChefe(Chefe chefe) {
         chefes.add(chefe);
     }
 
     public List<Chefe> getChefes() {
         return chefes;
+    }
+
+    public List<Garcom> getGarcons() {
+        return garcons;
     }
 
     public List<Prato> lerArquivo() throws Erro {
@@ -42,11 +61,10 @@ public class GerenciarDados {
 
                 Prato prato = new Prato(nomePrato, valorPrato, descricaoPrato);
                 pratos.add(prato);
-
             }
         } catch (IndexOutOfBoundsException e) {
-            throw new Erro("Não foi possível acessar o indice no arquivo: "+ e.getMessage());
-        } catch (Exception e){
+            throw new Erro("Não foi possível acessar o índice no arquivo: " + e.getMessage());
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return pratos;
