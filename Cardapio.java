@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -12,9 +13,10 @@ class Cardapio{
         JTextField nomeField = new JTextField(10);
         JTextField valorField = new JTextField(10);
         JTextField descricaoField = new JTextField(10);
-        JTextField chefeResponsavelField = new JTextField(10);
 
         JPanel formPanel = new JPanel();
+        formPanel.setLayout(new GridLayout(3, 2, 10, 10));
+
         formPanel.add(new JLabel("Nome:"));
         formPanel.add(nomeField);
         formPanel.add(Box.createHorizontalStrut(15));
@@ -24,17 +26,14 @@ class Cardapio{
         formPanel.add(new JLabel("Descrição:"));
         formPanel.add(descricaoField);
         formPanel.add(Box.createHorizontalStrut(15));
-        formPanel.add(new JLabel("Chefe Responsável:"));
-        formPanel.add(chefeResponsavelField);
 
         int result = JOptionPane.showConfirmDialog(null, formPanel, "Adicionar Prato", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
             String nome = nomeField.getText();
             double valor = Double.parseDouble(valorField.getText());
             String descricao = descricaoField.getText();
-            String chefeResponsavel = chefeResponsavelField.getText();
 
-            Prato prato = new Prato(nome, valor, descricao, chefeResponsavel);
+            Prato prato = new Prato(nome, valor, descricao);
             adicionarPrato(prato);
         }
     }

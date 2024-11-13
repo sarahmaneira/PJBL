@@ -6,18 +6,13 @@ import java.awt.event.ActionListener;
 
 public class Interface extends JFrame {
 
-
     public Interface() {
-
         setTitle("Taisho");
-        setSize(300, 200); // Tamanho da janela
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Fecha a janela ao clicar no X
-        setLocationRelativeTo(null); // Centraliza a janela na tela
-
+        setSize(300, 200);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
 
         setLayout(new FlowLayout(FlowLayout.CENTER, 20, 30));
-
-
 
         JButton btnGerenciarRestaurante = new JButton("Gerenciar Restaurante");
         btnGerenciarRestaurante.setFocusPainted(false);
@@ -49,10 +44,8 @@ public class Interface extends JFrame {
             }
         });
 
-
         add(btnGerenciarRestaurante);
         add(btnModoCliente);
-
 
         setVisible(true);
     }
@@ -62,6 +55,6 @@ public class Interface extends JFrame {
     }
 
     public static void main(String[] args) {
-        new Interface(); // Cria a janela
+        new Interface();
     }
 }

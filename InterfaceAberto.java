@@ -14,12 +14,13 @@ import java.util.List;
 import java.util.Map;
 
 public class InterfaceAberto extends JFrame {
-
     private JDesktopPane desktopPane;
     protected Map<String, Integer> pratosAdicionados;
     protected Map<String, Double> precosPratos;
     private ArrayList<Chefe> chefes = new ArrayList<>();
     GerenciarDados gerenciador = new GerenciarDados();
+    private JInternalFrame janelaChefes;
+    private JPanel painelChefes;
     Interface interfacep = new Interface();
 
 
@@ -81,10 +82,10 @@ public class InterfaceAberto extends JFrame {
         janelaInf.setSize(500, 450);
         janelaInf.setLayout(new FlowLayout());
 
-        String[] colunas = {"Nome", "Preço", "Descrição", "Chefe", "Remover"};
+        String[] colunas = {"Nome", "Preço", "Descrição", "Remover"};
         DefaultTableModel modeloTabela = new DefaultTableModel(colunas, 0) {
             public boolean isCellEditable(int row, int column) {
-                return column == 4;
+                return column == 3;
             }
         };
         JTable tabelaPratos = new JTable(modeloTabela);
@@ -94,11 +95,10 @@ public class InterfaceAberto extends JFrame {
         tabelaPratos.getColumnModel().getColumn(0).setPreferredWidth(90);
         tabelaPratos.getColumnModel().getColumn(1).setPreferredWidth(50);
         tabelaPratos.getColumnModel().getColumn(2).setPreferredWidth(300);
-        tabelaPratos.getColumnModel().getColumn(3).setPreferredWidth(50);
 
-        tabelaPratos.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer());
-        tabelaPratos.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(new JCheckBox(), tabelaPratos));
-        tabelaPratos.getColumnModel().getColumn(4).setPreferredWidth(80);
+        tabelaPratos.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer());
+        tabelaPratos.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(new JCheckBox(), tabelaPratos));
+        tabelaPratos.getColumnModel().getColumn(3).setPreferredWidth(80);
 
         JScrollPane scrollPane = new JScrollPane(tabelaPratos);
         janelaInf.add(scrollPane, BorderLayout.CENTER);
@@ -106,7 +106,7 @@ public class InterfaceAberto extends JFrame {
 
         List<Prato> pratos = gerenciador.lerArquivo();
         for (Prato prato : pratos) {
-            modeloTabela.addRow(new Object[]{prato.getNome(), prato.getValor(), prato.getDescricao(), prato.getChefeResponsavel(), "RMV"});
+            modeloTabela.addRow(new Object[]{prato.getNome(), prato.getValor(), prato.getDescricao(), "RMV"});
         }
 
         janelaInf.setVisible(true);
@@ -129,10 +129,6 @@ public class InterfaceAberto extends JFrame {
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Erro ao salvar os itens.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-    private double getPreco(String nomePrato) {
-        return precosPratos.getOrDefault(nomePrato, 0.0);
     }
 
     private void RemoverPrato(String prato) {
@@ -228,12 +224,10 @@ public class InterfaceAberto extends JFrame {
         janelaChefes.setLayout(new FlowLayout());
         janelaChefes.setLocation(535, 0);
 
-        // Painel para mostrar informações dos chefes
         JPanel painelChefes = new JPanel();
         painelChefes.setLayout(new BoxLayout(painelChefes, BoxLayout.Y_AXIS));
 
-        // Obter a lista de chefes e exibir cada um
-        for (Chefe chefe : gerenciador.getChefes()) { // gerenciador é sua instância de GerenciarDados
+        for (Chefe chefe : gerenciador.getChefes()) {
             JLabel chefeLabel = new JLabel("Nome: " + chefe.getNome() + ", Identificador: " + chefe.getIdentificador());
             painelChefes.add(chefeLabel);
         }
@@ -243,13 +237,30 @@ public class InterfaceAberto extends JFrame {
         desktopPane.add(janelaChefes);
     }
 
+    private void atualizarJanelaChefes() {
+        // Limpa o painel de chefes antes de adicionar novos dados
+        painelChefes.removeAll();
+
+        List<Chefe> chefes = gerenciador.getChefes(); // Pega a lista de chefes de GerenciarDados
+
+        // Adiciona as informações de cada chefe como uma nova linha
+        for (Chefe chefe : chefes) {
+            JLabel labelChefe = new JLabel("Chefe: " + chefe.getNome() + ", ID: " + chefe.getIdentificador());
+            painelChefes.add(labelChefe);
+        }
+
+        // Atualiza a interface gráfica para mostrar as mudanças
+        painelChefes.revalidate();
+        painelChefes.repaint();
+    }
+
     private void JanelaBotoes() {
         JPanel painelBotoes = new JPanel();
         painelBotoes.setLayout(new GridLayout(1, 3, 15, 5));
 
         Cardapio cardapio = new Cardapio();
-        Chefe chefe1 = new Chefe("Cristiano", "Chefe", 28, 4500.0, "Masculino", 204.55, 8, "c1");
-        Chefe chefe2 = new Chefe("Gustavo", "Chefe", 36, 4500.0, "Masculino", 204.55, 8, "c2");
+//        Chefe chefe1 = new Chefe("Cristiano", "Chefe", 28, 4500.0, "Masculino", 204.55, 8);
+//        Chefe chefe2 = new Chefe("Gustavo", "Chefe", 36, 4500.0, "Masculino", 204.55, 8);
 
 
         JButton btnAdicionarPrato = new JButton("Adicionar Prato");
@@ -271,7 +282,11 @@ public class InterfaceAberto extends JFrame {
         btnAdicionarChefe.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                chefe1.exibirFormularioChefe();
+                Chefe novoChefe = Chefe.exibirFormularioChefe();
+                if (novoChefe != null) {
+                    gerenciador.adicionarChefe(novoChefe); // Adiciona o chefe à lista em GerenciarDados
+                    atualizarJanelaChefes(); // Atualiza a janela para exibir o novo chefe
+                }
             }
         });
 
@@ -289,34 +304,18 @@ public class InterfaceAberto extends JFrame {
         });
 
 
-        btnAdicionarPrato.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                criarPrato();
-            }
-        });
-
         painelBotoes.add(btnAdicionarChefe);
         painelBotoes.add(btnRemoverChefe);
         painelBotoes.add(btnAdicionarPrato);
 
-        painelBotoes.setBounds(375, 500, 400, 200);
+
+        painelBotoes.setBounds(250, 500, 700, 50);
 
         desktopPane.add(painelBotoes);
     }
 
-    private void mostrarChefes(JPanel painelChefes) {
-        painelChefes.removeAll(); // Limpa o painel antes de adicionar os chefes
-        for (Chefe chefe : chefes) {
-            JLabel labelChefe = new JLabel("Nome: " + chefe.getNome() + ", ID: " + chefe.getIdentificador() + ", Salário: " + chefe.getSalario());
-            painelChefes.add(labelChefe);
-        }
-        painelChefes.revalidate();
-        painelChefes.repaint();
-    }
-
-    private void criarPrato() {
-
+    private double getPreco(String nomePrato) {
+        return precosPratos.getOrDefault(nomePrato, 0.0);
     }
 }
 

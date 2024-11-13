@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Chefe extends Funcionario {
@@ -7,11 +8,10 @@ public class Chefe extends Funcionario {
     private int horasTrabalhadas;
     private ArrayList<Prato> prato = new ArrayList<>();
 
-    public Chefe(String nome, String cargo, int idade, double salario, String genero, double valorFixo, int horasTrabalhadas, String identificador) {
+    public Chefe(String nome, String cargo, int idade, double salario, String genero, double valorFixo, int horasTrabalhadas) {
         super(nome, cargo, idade, salario, genero);
         this.valorFixo = valorFixo;
         this.horasTrabalhadas = horasTrabalhadas;
-        this.identificador = identificador;
     }
 
     @Override
@@ -19,21 +19,24 @@ public class Chefe extends Funcionario {
         System.out.println("O chefe " + getNome() + " está supervisionando a cozinha e criando novos pratos.");
     }
 
-    public void adicionarPrato(Prato p){
-        prato.add(p);
+    public void adicionarPrato(Prato p){prato.add(p);}
+
+    
+        
     }
 
-    public void exibirFormularioChefe(){
-        JTextField nomeField = new JTextField();
-        JTextField cargoField = new JTextField();
-        JTextField idadeField = new JTextField();
-        JTextField salarioField = new JTextField();
-        JTextField generoField = new JTextField();
-        JTextField valorFixoField = new JTextField();
-        JTextField horasTrabalhadasField = new JTextField();
-        JTextField identificadorField = new JTextField();
+     public static Chefe exibirFormularioChefe() {
+        JTextField nomeField = new JTextField(20);
+        JTextField cargoField = new JTextField(20);
+        JTextField idadeField = new JTextField(20);
+        JTextField salarioField = new JTextField(20);
+        JTextField generoField = new JTextField(20);
+        JTextField valorFixoField = new JTextField(20);
+        JTextField horasTrabalhadasField = new JTextField(20);
 
         JPanel formPanel = new JPanel();
+        formPanel.setLayout(new GridLayout(8, 2, 10, 10)); // 3 linhas, 2 colunas, com espaçamento de 10 pixels
+
         formPanel.add(new JLabel("Nome:"));
         formPanel.add(nomeField);
         formPanel.add(new JLabel("Cargo:"));
@@ -48,12 +51,9 @@ public class Chefe extends Funcionario {
         formPanel.add(valorFixoField);
         formPanel.add(new JLabel("Horas Trabalhadas:"));
         formPanel.add(horasTrabalhadasField);
-        formPanel.add(new JLabel("Identificador:"));
-        formPanel.add(identificadorField);
 
         int option = JOptionPane.showConfirmDialog(null, formPanel, "Adicionar Chefe", JOptionPane.OK_CANCEL_OPTION);
         if (option == JOptionPane.OK_OPTION) {
-            // Quando o usuário clicar em OK, os dados do chefe são coletados
             String nome = nomeField.getText();
             String cargo = cargoField.getText();
             int idade = Integer.parseInt(idadeField.getText());
@@ -61,21 +61,26 @@ public class Chefe extends Funcionario {
             String genero = generoField.getText();
             double valorFixo = Double.parseDouble(valorFixoField.getText());
             int horasTrabalhadas = Integer.parseInt(horasTrabalhadasField.getText());
-            String identificador = identificadorField.getText();
 
-            Chefe chefe = new Chefe(nome, cargo, idade, salario, genero, valorFixo, horasTrabalhadas, identificador);
+            return new Chefe(nome, cargo, idade, salario, genero, valorFixo, horasTrabalhadas);
         }
-        }
+        return null;
+    }
 
-    public String getIdentificador(){
+    public String getIdentificador() {
         return identificador;
     }
 
-   public double getValorFixo(){
+    public double getValorFixo() {
         return valorFixo;
-   }
+    }
 
-   public int getHorasTrabalhadas(){
+    public int getHorasTrabalhadas() {
         return horasTrabalhadas;
-   }
+    }
+
+    @Override
+    public String toString() {
+        return "Chefe: " + getNome() + ", ID: " + identificador + ", Salário: R$" + getSalario();
+    }
 }
