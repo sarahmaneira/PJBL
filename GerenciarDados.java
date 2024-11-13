@@ -6,6 +6,16 @@ import java.util.List;
 public class GerenciarDados {
     private List<Prato> pratos = new ArrayList<>();
     private List<Chefe> chefes = new ArrayList<>();
+    private Cliente cliente;
+
+    Chefe c1 = new Chefe("Cristiano", "Chefe", 28, 4500.0, "Masculino", 204.55, 8);
+    Chefe c2 = new Chefe("Gustavo", "Chefe", 36, 4500.0, "Masculino", 204.55, 8);
+    Cliente cliente1 = new Cliente();
+
+    public void adicionarPedidoAoCliente(String pedido) {
+        cliente.fazerPedido(pedido);
+    }
+
     private List<Garcom> garcons = new ArrayList<>();
 
     public GerenciarDados() {
@@ -18,6 +28,7 @@ public class GerenciarDados {
         Garcom g2 = new Garcom("Ana", "Garçonete", 30, 2200.0, "Feminino", 110.0, 8, 22);
         garcons.add(g1);
         garcons.add(g2);
+
     }
 
     public void adicionarChefe(Chefe chefe) {

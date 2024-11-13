@@ -143,12 +143,38 @@ public class InterfaceCliente extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 SalvarItens();
-                JOptionPane.showMessageDialog(InterfaceCliente.this,"Pedido registrado.");
+                mostrarPedido();
+                // JOptionPane.showMessageDialog(InterfaceCliente.this,"Pedido registrado.");
             }
         });
 
         botaoComprar.add(btnCompra);
         add(botaoComprar, BorderLayout.SOUTH);
+    }
+
+    private void mostrarPedido() {
+        JFrame telaPedido = new JFrame("Pedido Realizado");
+        telaPedido.setSize(400, 300);
+        telaPedido.setLocationRelativeTo(null);
+
+        JTextArea areaPedido = new JTextArea();
+        areaPedido.setEditable(false);
+
+        double total = 0;
+        StringBuilder pedidoTexto = new StringBuilder("Itens do Pedido:\n\n");
+        for (Map.Entry<String, Integer> entry : pratosAdicionados.entrySet()) {
+            String prato = entry.getKey();
+            int quantidade = entry.getValue();
+            double preco = obterPreco(prato);
+            pedidoTexto.append(prato).append(" - Quantidade: ").append(quantidade).append(" - Total: R$ ").append(preco * quantidade).append("\n");
+            total += preco * quantidade;
+        }
+        pedidoTexto.append("\nTotal do Pedido: R$ ").append(total);
+
+        areaPedido.setText(pedidoTexto.toString());
+        telaPedido.add(new JScrollPane(areaPedido));
+
+        telaPedido.setVisible(true);
     }
 
     private void SalvarItens() {
@@ -240,8 +266,5 @@ public class InterfaceCliente extends JFrame{
         }
 
     }
-
-
-
 
 }
