@@ -14,8 +14,8 @@ public class Chefe extends Funcionario {
     }
 
     @Override
-    public void realizarTarefa() {
-        System.out.println("O chefe " + getNome() + " está supervisionando a cozinha e criando novos pratos.");
+    public String realizarTarefa() {
+       return "O chefe " + getNome() + " está supervisionando a cozinha e criando novos pratos.";
     }
 
     public void adicionarPrato(Prato p) {
@@ -72,8 +72,4 @@ public class Chefe extends Funcionario {
         return horasTrabalhadas;
     }
 
-    @Override
-    public String toString() {
-        return "Chefe: " + getNome() + ", Salário: R$" + getSalario();
-    }
 }

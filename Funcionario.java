@@ -34,5 +34,5 @@ public abstract class Funcionario {
     }
 
 
-    public abstract void realizarTarefa();
+    public abstract String realizarTarefa();
 }

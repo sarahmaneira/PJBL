@@ -6,3 +6,5 @@ Prato: Roll de Salmão - Quantidade: 1 - Preço Unitário: R$ 15.0 - Total: R$ 1
 Prato: Sashimi - Quantidade: 2 - Preço Unitário: R$ 16.5 - Total: R$ 32.0
 Prato: Udon - Quantidade: 1 - Preço Unitário: R$ 14.0 - Total: R$ 14.0
 
+Prato: Udon - Quantidade: 1 - Preço Unitário: R$ 14.0 - Total: R$ 14.0
+Prato: Nigiri - Quantidade: 1 - Preço Unitário: R$ 12.0 - Total: R$ 12.0

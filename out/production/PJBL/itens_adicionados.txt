@@ -1,9 +1,8 @@
-
 Prato: Sashimi - Quantidade: 1 - Preço Unitário: R$ 16.5 - Total: R$ 16.0
 Prato: Udon - Quantidade: 1 - Preço Unitário: R$ 14.0 - Total: R$ 14.0
 Prato: Temaki - Quantidade: 1 - Preço Unitário: R$ 10.5 - Total: R$ 10.0
 Prato: Maki - Quantidade: 1 - Preço Unitário: R$ 13.0 - Total: R$ 13.0
 Prato: Roll de Salmão - Quantidade: 1 - Preço Unitário: R$ 15.0 - Total: R$ 15.0
-
 Prato: Sashimi - Quantidade: 2 - Preço Unitário: R$ 16.5 - Total: R$ 32.0
 Prato: Udon - Quantidade: 1 - Preço Unitário: R$ 14.0 - Total: R$ 14.0
+

@@ -35,12 +35,12 @@ public class GerenciarDados {
         chefes.add(chefe);
     }
 
-    public List<Chefe> getChefes() {
-        return chefes;
+    public  List<Chefe> getChefes() {
+        return chefe;
     }
 
-    public List<Garcom> getGarcons() {
-        return garcons;
+    public static Garcom getGarcom() {
+        return garcom;
     }
 
     public List<Prato> lerArquivo() throws Erro {
