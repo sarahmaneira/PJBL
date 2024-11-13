@@ -143,8 +143,12 @@ public class InterfaceCliente extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 SalvarItens();
+                Chefe chefe = GerenciarDados.getChefes();
+                Garcom garcom = GerenciarDados.getGarcom();
+
                 mostrarPedido();
-                // JOptionPane.showMessageDialog(InterfaceCliente.this,"Pedido registrado.");
+                String mensagem = "Pedido registrado.\n" + chefe.realizarTarefa() + "\n" + garcom.realizarTarefa();
+                JOptionPane.showMessageDialog(InterfaceCliente.this, mensagem);
             }
         });
 

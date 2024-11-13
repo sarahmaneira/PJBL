@@ -11,8 +11,8 @@ public class Garcom extends Funcionario {
     }
 
     @Override
-    public void realizarTarefa() {
-        System.out.println("O garçom " + getNome() + " está servindo os clientes.");
+    public String realizarTarefa() {
+        return "O garçom " + getNome() + " vai te atender hoje.";
     }
 
 
