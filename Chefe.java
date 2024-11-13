@@ -14,19 +14,20 @@ public class Chefe extends Funcionario {
         this.identificador = identificador;
     }
 
-    public void adicionarPrato(Prato p){
+    public void adicionarPrato(Prato p) {
         prato.add(p);
     }
 
-    public void exibirFormularioChefe(){
-        JTextField nomeField = new JTextField();
-        JTextField cargoField = new JTextField();
-        JTextField idadeField = new JTextField();
-        JTextField salarioField = new JTextField();
-        JTextField generoField = new JTextField();
-        JTextField valorFixoField = new JTextField();
-        JTextField horasTrabalhadasField = new JTextField();
-        JTextField identificadorField = new JTextField();
+    // Método de exibição do formulário de chefe com retorno do chefe criado
+    public static Chefe exibirFormularioChefe() {
+        JTextField nomeField = new JTextField(20);
+        JTextField cargoField = new JTextField(20);
+        JTextField idadeField = new JTextField(20);
+        JTextField salarioField = new JTextField(20);
+        JTextField generoField = new JTextField(20);
+        JTextField valorFixoField = new JTextField(20);
+        JTextField horasTrabalhadasField = new JTextField(20);
+        JTextField identificadorField = new JTextField(20);
 
         JPanel formPanel = new JPanel();
         formPanel.add(new JLabel("Nome:"));
@@ -48,7 +49,6 @@ public class Chefe extends Funcionario {
 
         int option = JOptionPane.showConfirmDialog(null, formPanel, "Adicionar Chefe", JOptionPane.OK_CANCEL_OPTION);
         if (option == JOptionPane.OK_OPTION) {
-            // Quando o usuário clicar em OK, os dados do chefe são coletados
             String nome = nomeField.getText();
             String cargo = cargoField.getText();
             int idade = Integer.parseInt(idadeField.getText());
@@ -58,19 +58,26 @@ public class Chefe extends Funcionario {
             int horasTrabalhadas = Integer.parseInt(horasTrabalhadasField.getText());
             String identificador = identificadorField.getText();
 
-            Chefe chefe = new Chefe(nome, cargo, idade, salario, genero, valorFixo, horasTrabalhadas, identificador);
+            return new Chefe(nome, cargo, idade, salario, genero, valorFixo, horasTrabalhadas, identificador);
         }
-        }
+        return null; // Caso o usuário cancele a entrada de dados
+    }
 
-    public String getIdentificador(){
+    public String getIdentificador() {
         return identificador;
     }
 
-   public double getValorFixo(){
+    public double getValorFixo() {
         return valorFixo;
-   }
+    }
 
-   public int getHorasTrabalhadas(){
+    public int getHorasTrabalhadas() {
         return horasTrabalhadas;
-   }
+    }
+
+    // Método para retornar uma string com os dados do chefe, útil para exibição
+    @Override
+    public String toString() {
+        return "Chefe: " + getNome() + ", ID: " + identificador + ", Salário: R$" + getSalario();
+    }
 }
