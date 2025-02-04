@@ -1,4 +1,4 @@
-# 🍣 Sistema de Restaurante Japonês    
+## 🍣 Sistema de Restaurante Japonês    
 Este é um sistema desenvolvido em Java para gerenciar um restaurante japonês, permitindo a administração de pedidos, clientes, funcionários e cardápio.
 
 ### 📌 Funcionalidades     
